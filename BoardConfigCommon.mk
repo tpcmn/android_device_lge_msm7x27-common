@@ -13,8 +13,9 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_ICS_COMPAT
 #BOARD_CPU_COLOR_CONVERT := true
 
 ## Kernel
-TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
+#TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
 # Copy LG Kernel Headers here if necessary, DO NOT use Android auto-generated headers
+TARGET_PREBUILT_KERNEL := device/lge/thunderc/kernels/test21/zImage
 TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include
 BOARD_KERNEL_CMDLINE := mem=471M console=ttyMSM2,115200n8 androidboot.hardware=qcom
 
@@ -46,16 +47,16 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 
 ## Partition Sizes
 # Fix this up by examining /proc/mtd on a running device
-BOARD_KERNEL_BASE := 0x12800000
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00440000
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00500000
 # Ignore that this is much larger than the 190Mb allowed.
 # It's only for resolving build issues with the system.img
 # being too big. It will still be only about 100MB MAXIMUM
 # because all the useless trash is now in extras
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0xE600000
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x0c780000
+BOARD_KERNEL_BASE := 0x12200000
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00700000
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00700000
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x0a4e0000
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 ## Graphics
@@ -83,6 +84,7 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
+BOARD_CDMA_NETWORK := true
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 TARGET_QCOM_DISPLAY_VARIANT := true
 COMMON_GLOBAL_CFLAGS += -DMISSING_GRALLOC_BUFFERS
@@ -143,4 +145,4 @@ BOARD_CHARGING_CMDLINE_VALUE := "pwroff"
 BOARD_USES_RECOVERY_CHARGEMODE := false
 
 ## OTA script
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/msm7x27-common/releasetools/ota_from_target_files
+#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/msm7x27-common/releasetools/ota_from_target_files
