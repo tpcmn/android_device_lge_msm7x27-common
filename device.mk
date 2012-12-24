@@ -43,7 +43,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.camera=msm7x27 \
     ro.com.google.locationfeatures=1 \
     ro.com.google.networklocation=1 \
-    ro.com.google.gmsversion=2.3_r6 \
     ro.setupwizard.enable_bypass=1 \
     ro.telephony.call_ring.multiple=false \
     ro.vold.umsdirtyratio=20
@@ -81,8 +80,8 @@ PRODUCT_PACKAGES += \
     lgapversion
     
 # Build sim toolkit
-PRODUCT_PACKAGES += \
-    Stk
+#PRODUCT_PACKAGES += \
+#    Stk
     
 # Camera
 PRODUCT_PACKAGES += \
