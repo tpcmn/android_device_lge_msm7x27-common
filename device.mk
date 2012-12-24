@@ -10,6 +10,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml
 
+
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/releasetools/extras.sh:system/bin/extras.sh
 

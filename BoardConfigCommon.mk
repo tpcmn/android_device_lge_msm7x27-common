@@ -62,6 +62,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_EGL_NEEDS_LEGACY_FB := true
 TARGET_DISABLE_TRIPLE_BUFFERING := true
 BOARD_EGL_CFG := device/lge/msm7x27-common/configs/egl.cfg
+TARGET_QCOM_DISPLAY_VARIANT := mr1
 
 ## Qualcomm and Adreno Hardware
 COMMON_GLOBAL_CFLAGS += -DANCIENT_GL
@@ -88,7 +89,8 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 # COMMON_GLOBAL_CFLAGS += -DQCOM_FM_ENABLED
 
 ## RIL
-BOARD_PROVIDES_LIBRIL := true
+#BOARD_PROVIDES_LIBRIL := true
+BOARD_CDMA_NETWORK := true
 
 ## Mass Storage for Jelly Bean
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
