@@ -4,14 +4,14 @@
 USE_CAMERA_STUB := true
 
 # Use the Qualcomm common folder 
-include device/qcom/msm7x27/BoardConfigCommon.mk 
+#include device/qcom/msm7x27/BoardConfigCommon.mk 
 
 ## Camera
 TARGET_DISABLE_ARM_PIE := true
 BOARD_NEEDS_MEMORYHEAPPMEM := true
 BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
 COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
-#COMMON_GLOBAL_CFLAGS += -DQCOM_ICS_COMPAT
+COMMON_GLOBAL_CFLAGS += -DQCOM_ICS_COMPAT
 #BOARD_USES_LEGACY_CAMERA := true
 #BOARD_CPU_COLOR_CONVERT := true
 
@@ -71,9 +71,9 @@ TARGET_USES_GENLOCK := true
 TARGET_USES_ION := false
 BOARD_HAVE_HDMI_SUPPORT := false
 TARGET_NO_HW_OVERLAY := true
-#TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
+TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
 BOARD_USE_SKIA_LCDTEXT := true
-#TARGET_USES_C2D_COMPOSITION := false
+TARGET_USES_C2D_COMPOSITION := false
 BOARD_AVOID_DRAW_TEXTURE_EXTENSION := true
 TARGET_USE_OVERLAY := false
 TARGET_HAVE_BYPASS := false
@@ -137,13 +137,24 @@ BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WLAN_DEVICE := ath6kl
 WIFI_AP_DRIVER_MODULE_ARG := "ifname=athap0 fwmode=2"
-WIFI_AP_DRIVER_MODULE_PATH := /system/wifi/ar6000.ko
-WIFI_AP_DRIVER_MODULE_NAME := ar6000
+WIFI_AP_DRIVER_MODULE_PATH := /system/lib/modules/wireless.ko
+WIFI_AP_DRIVER_MODULE_NAME := wireless
 WIFI_DRIVER_MODULE_ARG := "ifname=wlan0 fwmode=1"
-WIFI_DRIVER_MODULE_PATH := /system/wifi/ar6000.ko
-WIFI_DRIVER_MODULE_NAME := ar6000
+WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wireless.ko
+WIFI_DRIVER_MODULE_NAME := wireless
 BOARD_HAVE_LEGACY_HOSTAPD := true
 BOARD_HOSTAPD_NO_ENTROPY := true
+
+#WPA_SUPPLICANT_VERSION          := VER_0_6_X 
+#BOARD_WLAN_DEVICE               := bcm4325 
+#BOARD_WEXT_NO_COMBO_SCAN        := true 
+#BOARD_WPA_SUPPLICANT_DRIVER     := WEXT 
+#WIFI_DRIVER_HAS_LGE_SOFTAP      := true 
+#WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/wireless.ko" 
+#WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=/etc/wl/nvram.txt config_path=/data/misc/wifi/config" 
+#WIFI_DRIVER_MODULE_NAME         := "wireless" 
+#WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin" 
+#WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin" 
 
 ## Command line for charging mode
 BOARD_CHARGING_CMDLINE_NAME := "lge.reboot"
