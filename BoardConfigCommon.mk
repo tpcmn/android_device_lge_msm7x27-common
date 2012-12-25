@@ -93,6 +93,8 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 ## RIL
 BOARD_PROVIDES_LIBRIL := true
 BOARD_CDMA_NETWORK := true
+BOARD_USES_LEGACY_RIL := true
+BOARD_RIL_CLASS := ../../../device/lge/thunderc/ril/
 
 ## Mass Storage for Jelly Bean
 #TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
