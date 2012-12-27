@@ -92,8 +92,11 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 
 ## RIL
 BOARD_PROVIDES_LIBRIL := true
+TARGET_PROVIDES_LIBRIL := vendor/lge/thunderc/proprietary/lib/libril.so
 BOARD_CDMA_NETWORK := true
 BOARD_USES_LEGACY_RIL := true
+# Legacy ril
+#COMMON_GLOBAL_CFLAGS += -DRIL_VERSION_2_SUPPORT
 #BOARD_RIL_CLASS := ../../../device/lge/thunderc/ril/
 
 ## Mass Storage for Jelly Bean
