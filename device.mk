@@ -1,4 +1,4 @@
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 $(call inherit-product, device/qcom/msm7x27/msm7x27.mk)
 
@@ -59,7 +59,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hdmi_out=false \
     debug.sf.hw=1 \
-    debug.composition.type=mdp \
+    debug.composition.type=gpu \
     debug.gr.numframebuffers=2 \
     persist.service.adb.enable=1
 
@@ -100,9 +100,9 @@ PRODUCT_PACKAGES += \
     hwaddrs
 
 # Offmode charging
-PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images
+#PRODUCT_PACKAGES += \
+#    charger \
+#    charger_res_images
 
 
 PRODUCT_TAGS += dalvik.gc.type-precise

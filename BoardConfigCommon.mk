@@ -92,9 +92,12 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 
 ## RIL
 BOARD_PROVIDES_LIBRIL := true
-TARGET_PROVIDES_LIBRIL := vendor/lge/thunderc/proprietary/lib/libril.so
+#TARGET_PROVIDES_LIBRIL := vendor/lge/thunderc/proprietary/lib/libril.so
 BOARD_CDMA_NETWORK := true
-BOARD_USES_LEGACY_RIL := true
+#BOARD_LTE_ON_CDMA := false
+#TARGET_LTE_ON_CDMA := false
+#COMMON_GLOBAL_CFLAGS += Doptional
+#BOARD_USES_LEGACY_RIL := true
 # Legacy ril
 #COMMON_GLOBAL_CFLAGS += -DRIL_VERSION_2_SUPPORT
 #BOARD_RIL_CLASS := ../../../device/lge/thunderc/ril/
@@ -121,7 +124,7 @@ BOARD_USE_LEGACY_TOUCHSCREEN := true
 
 ## Wi-Fi & Wi-Fi HotSpot
 WPA_SUPPLICANT_VERSION          := VER_0_8_X
-BOARD_WLAN_DEVICE               := bcm4325
+BOARD_WLAN_DEVICE               := bcmhd
 BOARD_WEXT_NO_COMBO_SCAN        := true
 BOARD_WPA_SUPPLICANT_DRIVER     := WEXT
 WIFI_DRIVER_HAS_LGE_SOFTAP      := true
@@ -130,8 +133,9 @@ WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=
 WIFI_DRIVER_MODULE_NAME         := "wireless"
 WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
-BOARD_HAVE_LEGACY_HOSTAPD       := true
-BOARD_HOSTAPD_NO_ENTROPY 	:= true
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd 
+#BOARD_HAVE_LEGACY_HOSTAPD       := true
+#BOARD_HOSTAPD_NO_ENTROPY 	:= true
 
 ## OTA script
 #TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/msm7x27-common/releasetools/ota_from_target_files
