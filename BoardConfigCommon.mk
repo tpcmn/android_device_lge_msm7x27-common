@@ -14,11 +14,6 @@
 # limitations under the License.
 #
 
-# WARNING: This line must come *before* including the proprietary
-# variant, so that it gets overwritten by the parent (which goes
-# against the traditional rules of inheritance).
-USE_CAMERA_STUB := true
-
 # Use the Qualcomm common folder
 include device/qcom/msm7x27/BoardConfigCommon.mk
 
@@ -58,13 +53,8 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x0a4e0000
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 ## Graphics
-# Force non usage of VSync
 BOARD_EGL_NEEDS_LEGACY_FB := true
 TARGET_DISABLE_TRIPLE_BUFFERING := true
-BOARD_EGL_CFG := device/lge/msm7x27-common/configs/egl.cfg
-#TARGET_QCOM_DISPLAY_VARIANT := mr1
-
-## Qualcomm and Adreno Hardware
 COMMON_GLOBAL_CFLAGS += -DANCIENT_GL
 
 ## GPS
@@ -75,13 +65,14 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
 ## Lights
-TARGET_PROVIDES_LIBLIGHTS := true
+TARGET_PROVIDES_LIBLIGHT := true
 
-## Audio, Bluetooth & FM Radio
+## Bluetooth
 BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/configs/libbt_vndcfg.txt
+BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt
+
+## Audio & FM Radio
 BOARD_COMBO_DEVICE_SUPPORTED := true
-BOARD_HAVE_BLUETOOTH_BCM := true
 # BOARD_FM_DEVICE := bcm4325
 # BOARD_HAVE_FM_RADIO := true
 # Use the second one (QCOM_FM_ENABLED) not the first
@@ -133,9 +124,8 @@ WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=
 WIFI_DRIVER_MODULE_NAME         := "wireless"
 WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd 
-#BOARD_HAVE_LEGACY_HOSTAPD       := true
-#BOARD_HOSTAPD_NO_ENTROPY 	:= true
+# Use irregular Wi-FI strength detector
+BOARD_HAS_IRREGULAR_WIFI_STRENGTH := true
 
 ## OTA script
 #TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/msm7x27-common/releasetools/ota_from_target_files

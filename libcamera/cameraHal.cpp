@@ -32,7 +32,7 @@
 #define MSM_COPY_HW 1
 #define HWA 1
 #ifdef HWA
-#include "qcom/display_legacy/libgralloc/gralloc_priv.h"
+#include "qcom/display-legacy/libgralloc/gralloc_priv.h"
 #else
 #include "libhardware/modules/gralloc/gralloc_priv.h"
 #endif
@@ -105,8 +105,6 @@ CameraHAL_CopyBuffers_Hw(int srcFd, int destFd,
     int    fb_fd = open("/dev/graphics/fb0", O_RDWR);
 
 #ifndef MSM_COPY_HW
-    if (fb_fd > 0)
-        close(fb_fd);
     return false;
 #endif
 
@@ -584,14 +582,14 @@ qcamera_preview_enabled(struct camera_device * device)
    ALOGV("qcamera_preview_enabled:\n");
    return qCamera->previewEnabled() ? 1 : 0;
 }
-
+/*
 int
 qcamera_store_meta_data_in_buffers(struct camera_device * device, int enable)
 {
    ALOGV("qcamera_store_meta_data_in_buffers:\n");
    return NO_ERROR;
 }
-
+*/
 int 
 qcamera_start_recording(struct camera_device * device)
 {
@@ -814,7 +812,7 @@ qcamera_device_open(const hw_module_t* module, const char* name,
    camera_ops->start_preview              = qcamera_start_preview;
    camera_ops->stop_preview               = qcamera_stop_preview;
    camera_ops->preview_enabled            = qcamera_preview_enabled;
-   camera_ops->store_meta_data_in_buffers = qcamera_store_meta_data_in_buffers;
+   camera_ops->store_meta_data_in_buffers = NULL; //qcamera_store_meta_data_in_buffers;
    camera_ops->start_recording            = qcamera_start_recording;
    camera_ops->stop_recording             = qcamera_stop_recording;
    camera_ops->recording_enabled          = qcamera_recording_enabled;
