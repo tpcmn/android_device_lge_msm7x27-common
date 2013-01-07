@@ -14,12 +14,16 @@
 # limitations under the License.
 #
 
+# This variable is set first, so it can be overridden
+# by BoardConfigVendor.mk
+USE_CAMERA_STUB := true
+
 # Use the Qualcomm common folder
 include device/qcom/msm7x27/BoardConfigCommon.mk
 
 ## Camera
-BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
-COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
+#BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+#COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
 #BOARD_USES_LEGACY_CAMERA := true
 #BOARD_CPU_COLOR_CONVERT := true
 

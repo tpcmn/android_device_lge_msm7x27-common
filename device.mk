@@ -65,6 +65,7 @@ PRODUCT_PACKAGES += \
 # Misc
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
+	lib_driver_cmd_wext \
     gps.default \
     lights.msm7x27 \
     lgapversion
