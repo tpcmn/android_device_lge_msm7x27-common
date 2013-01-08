@@ -140,8 +140,9 @@ WIFI_DRIVER_MODULE_NAME         := "wireless"
 WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
 
-## OTA script
-#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/msm7x27-common/releasetools/ota_from_target_files
+## OTA script extra files (build/tools/releasetools) 
+TARGET_OTA_EXTRAS_FILE := device/lge/msm7x27-common/releasetools/extras.txt 
+
 BOARD_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"lge.reboot"' -DBOARD_CHARGING_CMDLINE_VALUE='"pwroff"'
 #BOARD_CHARGING_CMDLINE_NAME := "lge.reboot" 
 #BOARD_CHARGING_CMDLINE_VALUE := "pwroff" 
