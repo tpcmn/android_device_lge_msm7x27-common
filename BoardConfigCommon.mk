@@ -24,7 +24,6 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 BOARD_HAS_NO_SELECT_BUTTON := true
 
 ## Kernel
-<<<<<<< HEAD
 #TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
 TARGET_PREBUILT_KERNEL := device/lge/thunderc/kernels/test21/zImage
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom
@@ -118,4 +117,3 @@ BOARD_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"lge.reboot"' -DBOARD_CHAR
 BOARD_USES_RECOVERY_CHARGEMODE := false 
 
 ## OTA script extra files (build/tools/releasetools) 
-
