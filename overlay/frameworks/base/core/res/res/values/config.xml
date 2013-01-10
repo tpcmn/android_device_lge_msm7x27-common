@@ -14,7 +14,6 @@
 
     <string-array translatable="false" name="config_tether_usb_regexs">
          <item>"rndis\\d"</item>
-         <item>"usb\\d"</item>
     </string-array>
     
     <integer-array translatable="false" name="config_tether_upstream_types">
