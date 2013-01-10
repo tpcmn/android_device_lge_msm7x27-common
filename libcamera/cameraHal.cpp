@@ -233,6 +233,7 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
 
       mWindow->set_usage(mWindow,
                          GRALLOC_USAGE_PMEM_PRIVATE_ADSP |
+
                          GRALLOC_USAGE_SW_READ_OFTEN);
       retVal = mWindow->set_buffers_geometry(mWindow,
                                              previewWidth, previewHeight,

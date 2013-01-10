@@ -12,9 +12,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh
 
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/releasetools/extras.sh:system/bin/extras.sh
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/CHANGELOG-CM.txt:system/etc/CHANGELOG-CM.txt \
     $(LOCAL_PATH)/configs/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
@@ -42,6 +39,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.camera=msm7x27 \
     ro.com.google.locationfeatures=1 \
     ro.com.google.networklocation=1 \
+    ro.com.google.gmsversion=2.3_r6 \
     ro.setupwizard.enable_bypass=1 \
     ro.telephony.call_ring.multiple=false \
     ro.vold.umsdirtyratio=20
@@ -65,7 +63,6 @@ PRODUCT_PACKAGES += \
 # Misc
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
-	lib_driver_cmd_wext \
     gps.default \
     lights.msm7x27 \
     lgapversion
