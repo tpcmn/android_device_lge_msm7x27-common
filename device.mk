@@ -64,6 +64,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
     gps.default \
+	gps.msm7x27 \
+	libloc_api-rpc \
     lights.msm7x27 \
     lgapversion
     
