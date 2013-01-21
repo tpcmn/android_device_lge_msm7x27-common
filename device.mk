@@ -55,10 +55,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio_policy.msm7x27 \
 	audio_policy.thunderc \
-    audio.primary.msm7x27 \
 	audio.primary.thunderc
+    #audio.primary.msm7x27 \
+#    audio_policy.msm7x27 \
 
 # Media
 PRODUCT_PACKAGES += \
