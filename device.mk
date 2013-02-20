@@ -25,9 +25,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nvram.txt:system/etc/wl/nvram.txt \
     $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab \
 	$(LOCAL_PATH)/prebuilt/etc/gps.conf:system/etc/gps.conf \
-	$(LOCAL_PATH)/configs/hostapd.conf:system/etc/wifi/hostapd.conf \
     $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
-
+# 	$(LOCAL_PATH)/configs/hostapd.conf:system/etc/wifi/hostapd.conf \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \

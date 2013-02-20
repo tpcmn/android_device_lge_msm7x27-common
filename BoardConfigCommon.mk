@@ -43,7 +43,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 ## Graphics
 BOARD_EGL_NEEDS_LEGACY_FB := true
-TARGET_DISABLE_TRIPLE_BUFFERING := true
+##TARGET_DISABLE_TRIPLE_BUFFERING := true
 COMMON_GLOBAL_CFLAGS += -DANCIENT_GL
 
 ## Camera
@@ -80,7 +80,7 @@ WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
 #WIFI_AP_DRIVER_MODULE_PATH := "/system/lib/modules/wireless.ko"
 #WIFI_AP_DRIVER_MODULE_NAME := "wireless" 
 #WIFI_AP_FIRMWARE_LOADER := "" 
-WIFI_DRIVER_LOADER_REUSE := true
+#WIFI_DRIVER_LOADER_REUSE := true
 
 ## Wi-Fi Hotspot
 #BOARD_HAVE_LEGACY_HOSTAPD := true
