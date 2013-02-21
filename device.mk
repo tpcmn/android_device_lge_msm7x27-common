@@ -69,6 +69,7 @@ PRODUCT_PACKAGES += \
 	gps.msm7x27 \
 	libloc_api-rpc \
     lights.msm7x27 \
+	hwcomposer.msm7x27 \
     lgapversion \
 	librpc
     
