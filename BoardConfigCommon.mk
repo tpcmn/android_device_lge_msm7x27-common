@@ -69,18 +69,18 @@ BOARD_WPA_SUPPLICANT_DRIVER     := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 #BOARD_WLAN_NO_FWRELOAD := true
 WIFI_DRIVER_HAS_LGE_SOFTAP      := true
-#WIFI_DRIVER_MODULE_ARG          := "ifname=wlan0 fwmode=1"
 WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/wireless.ko"
 WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
 WIFI_DRIVER_MODULE_NAME         := "wireless"
 WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
+BOARD_WIFI_CLASS := ../../../device/lge/msm7x27-common/wifi/
 
 #WIFI_AP_DRIVER_MODULE_ARG := "ifname=wl0.1 fwmode=2" 
 #WIFI_AP_DRIVER_MODULE_PATH := "/system/lib/modules/wireless.ko"
 #WIFI_AP_DRIVER_MODULE_NAME := "wireless" 
 #WIFI_AP_FIRMWARE_LOADER := "" 
-WIFI_DRIVER_LOADER_REUSE := true
+#WIFI_DRIVER_LOADER_REUSE := true
 
 ## Wi-Fi Hotspot
 #BOARD_HAVE_LEGACY_HOSTAPD := true
