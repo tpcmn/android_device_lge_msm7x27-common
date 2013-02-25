@@ -62,6 +62,18 @@ TARGET_PROVIDES_LIBAUDIO := true
 # COMMON_GLOBAL_CFLAGS += -DQCOM_FM_ENABLED
 
 ## Wi-Fi & Wi-Fi HotSpot
+COMMON_GLOBAL_CFLAGS += -DWIFI_AP_HAS_OWN_DRIVER
+BOARD_WLAN_NO_FWRELOAD := true
+BOARD_HAVE_LEGACY_HOSTAPD := true
+BOARD_HOSTAPD_NO_ENTROPY := true
+
+WIFI_AP_DRIVER_MODULE_ARG := "ifname=athap0 fwmode=2"
+WIFI_AP_DRIVER_MODULE_PATH := /system/wifi/wireless.ko
+WIFI_AP_DRIVER_MODULE_NAME := wireless
+WIFI_AP_FIRMWARE_LOADER := ""
+
+WIFI_DRIVER_MODULE_ARG := "ifname=wlan0 fwmode=1"
+
 WPA_SUPPLICANT_VERSION          := VER_0_8_X
 BOARD_WLAN_DEVICE               := bcm4325
 BOARD_WEXT_NO_COMBO_SCAN        := true
@@ -73,7 +85,7 @@ WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=
 WIFI_DRIVER_MODULE_NAME         := "wireless"
 WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
-##BOARD_WIFI_CLASS := ../../../device/lge/msm7x27-common/wifi/
+BOARD_WIFI_CLASS := ../../../device/lge/msm7x27-common/wifi/
 
 
 ## GPS
