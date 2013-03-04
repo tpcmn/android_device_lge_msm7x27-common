@@ -57,7 +57,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
 	audio_policy.thunderc \
 	audio.primary.thunderc
-    #audio.primary.msm7x27 \
+    #audio.primary.msm7x27 
 #    audio_policy.msm7x27 \
 
 # Media

@@ -74,7 +74,7 @@ WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=
 WIFI_DRIVER_MODULE_NAME         := "wireless"
 WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
-
+BOARD_WIFI_CLASS                := ../../device/lge/msm7x27-common/wifi/
 
 ## GPS
 BOARD_USES_QCOM_GPS := true
