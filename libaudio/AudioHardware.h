@@ -1,6 +1,5 @@
 /*
 ** Copyright 2008, The Android Open-Source Project
-** Copyright (c) 2012, Code Aurora Forum. All rights reserved.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -27,17 +26,13 @@
 #include <hardware_legacy/AudioHardwareBase.h>
 
 extern "C" {
-#include <linux/msm_audio.h>
-#include <linux/msm_audio_voicememo.h>
+#include "msm_audio.h"
+#include "msm_audio_voicememo.h"
 }
 
+using namespace android;
+
 namespace android_audio_legacy {
-using android::SortedVector;
-using android::Mutex;
-
-// P500 SPEAKER_IN_CALL fix
-#define AUDIO_DEVICE_OUT_SPEAKER_IN_CALL 0x4000
-
 
 // ----------------------------------------------------------------------------
 // Kernel driver interface
@@ -56,13 +51,13 @@ using android::Mutex;
 #define EQ_MAX_BAND_NUM 12
 
 #define ADRC_ENABLE  0x0001
-#define ADRC_DISABLE 0xFFFE
+#define ADRC_DISABLE 0x0000
 #define EQ_ENABLE    0x0002
-#define EQ_DISABLE   0xFFFD
+#define EQ_DISABLE   0x0000
 #define RX_IIR_ENABLE  0x0004
-#define RX_IIR_DISABLE 0xFFFB
+#define RX_IIR_DISABLE 0x0000
 #define MBADRC_ENABLE  0x0010
-#define MBADRC_DISABLE 0xFFEF
+#define MBADRC_DISABLE 0x0000
 
 #define AGC_ENABLE     0x0001
 #define NS_ENABLE      0x0002
@@ -159,6 +154,7 @@ enum tty_modes {
 #define AUDIO_HW_IN_FORMAT (AudioSystem::PCM_16_BIT)  // Default audio input sample format
 // ----------------------------------------------------------------------------
 
+
 class AudioHardware : public  AudioHardwareBase
 {
     class AudioStreamOutMSM72xx;
@@ -171,7 +167,7 @@ public:
 
     virtual status_t    setVoiceVolume(float volume);
     virtual status_t    setMasterVolume(float volume);
-#ifdef HAVE_FM_RADIO
+#ifdef QCOM_FM_ENABLED
     virtual status_t    setFmVolume(float volume);
 #endif
     virtual status_t    setMode(int mode);
@@ -218,8 +214,8 @@ private:
     uint32_t    getInputSampleRate(uint32_t sampleRate);
     bool        checkOutputStandby();
     status_t    doRouting(AudioStreamInMSM72xx *input);
-#ifdef HAVE_FM_RADIO
-    status_t    setFmOnOff(bool onoff);
+#ifdef QCOM_FM_ENABLED
+    status_t    setFmOnOff(int onoff);
 #endif
     AudioStreamInMSM72xx*   getActiveInput_l();
 
@@ -286,8 +282,10 @@ private:
         virtual unsigned int  getInputFramesLost() const { return 0; }
                 uint32_t    devices() { return mDevices; }
                 int         state() const { return mState; }
-        virtual status_t    addAudioEffect(effect_interface_s**) { return 0;}
-        virtual status_t    removeAudioEffect(effect_interface_s**) { return 0;}
+
+        // Stubs (ICS)
+        virtual status_t addAudioEffect(effect_handle_t effect) { return INVALID_OPERATION; }
+        virtual status_t removeAudioEffect(effect_handle_t effect) { return INVALID_OPERATION; }
 
     private:
                 AudioHardware* mHardware;
@@ -309,22 +307,23 @@ private:
             bool        mBluetoothNrec;
             uint32_t    mBluetoothId;
             AudioStreamOutMSM72xx*  mOutput;
-            SortedVector <AudioStreamInMSM72xx*>   mInputs;
+            android::SortedVector <AudioStreamInMSM72xx*>   mInputs;
 
             msm_snd_endpoint *mSndEndpoints;
             int mNumSndEndpoints;
             int mCurSndDevice;
+	    int mFmRadioEnabled;
+	    int mFmPrev;
+	    int mFmVolume;
             int m7xsnddriverfd;
-            bool mDualMicEnabled;
-            int  mTtyMode;
-            bool mBuiltinMicSelected;
-#ifdef HAVE_FM_RADIO
-            int mFmRadioEnabled;
-            int mFmPrev;
-#endif
+            int fmfd;
+            bool        mDualMicEnabled;
+            int         mTtyMode;
+
+            bool        mBuiltinMicSelected;
 
      friend class AudioStreamInMSM72xx;
-            Mutex       mLock;
+            android::Mutex       mLock;
 };
 
 // ----------------------------------------------------------------------------
