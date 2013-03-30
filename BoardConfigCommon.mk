@@ -13,6 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+## Define BOARD_HAVE_BLUETOOTH_BLUEZ before device/qcom/msm7x27/BoardConfigCommon.mk   
+##Bluetooth  
+BOARD_HAVE_BLUETOOTH_BLUEZ := true 
+BOARD_HAVE_BLUETOOTH_BCM := true
+#BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt
+     
 
 # Use the Qualcomm common folder
 include device/qcom/msm7x27/BoardConfigCommon.mk
@@ -84,11 +90,6 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE :=
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE_LEGACY := msm7x27 # temporary workaround
 BOARD_USES_QCOM_LIBRPC := true
 
-## Bluetooth
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt
-
-
 ## RIL
 BOARD_PROVIDES_LIBRIL := true
 #TARGET_PROVIDES_LIBRIL := vendor/lge/thunderc/proprietary/lib/libril.so
@@ -119,7 +120,10 @@ SMALLER_FONT_FOOTPRINT := true
 ## Browser & WebKit
 ENABLE_WEBGL := true
 
-BOARD_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"lge.reboot"' -DBOARD_CHARGING_CMDLINE_VALUE='"pwroff"'
-BOARD_USES_RECOVERY_CHARGEMODE := false 
+#BOARD_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"lge.reboot"' -DBOARD_CHARGING_CMDLINE_VALUE='"pwroff"'
+BOARD_CHARGING_CMDLINE_NAME := "lge.reboot"  
+BOARD_CHARGING_CMDLINE_VALUE := "pwroff"  
+
+#BOARD_USES_RECOVERY_CHARGEMODE := false 
 
 ## OTA script extra files (build/tools/releasetools) 
