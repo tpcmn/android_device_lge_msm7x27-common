@@ -489,7 +489,23 @@ status_t AudioPolicyManager::setDeviceConnectionState(audio_devices_t device,
     return BAD_VALUE;
 }
 
+bool AudioPolicyManager::isStreamActive(int stream, uint32_t inPastMs) const
+{
+    nsecs_t sysTime = systemTime();
+    for (size_t i = 0; i < mOutputs.size(); i++) {
+        if (mOutputs.valueAt(i)->mRefCount[stream] != 0 ||
+            ns2ms(sysTime - mOutputs.valueAt(i)->mStopTime[stream]) < inPastMs) {
+            return true;
+        }
+    }
 
+    if (stream == AudioSystem::MUSIC &&
+            (mAvailableOutputDevices & AudioSystem::DEVICE_OUT_FM)) {
+        return true;
+    }
+
+    return false;
+}
 
 
 }; // namespace android_audio_legacy

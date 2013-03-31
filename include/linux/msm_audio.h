@@ -14,12 +14,6 @@
  *
  */
 
-/*===========================================================================
-when       who       what, where, why                        comment tag
---------   ----    -------------------------------------    ----------------------------------
-2009-11-8  chenjun  add audio loopbcak                        ZTE_Audio-LB_CJ_1
-===========================================================================*/
-
 #ifndef __LINUX_MSM_AUDIO_H
 #define __LINUX_MSM_AUDIO_H
 
@@ -246,11 +240,6 @@ struct msm_snd_endpoint {
 
 #define SND_AVC_CTL _IOW(SND_IOCTL_MAGIC, 6, unsigned *)
 #define SND_AGC_CTL _IOW(SND_IOCTL_MAGIC, 7, unsigned *)
-/* ZTE_Audio_CJ_100302, chenjun, 2010-3-2, start */
-/* ZTE_Audio-LB_CJ_1 chenjun 2009-10-28 start */
-#define SND_SET_AUDIO_LOOPBACK _IOW(SND_IOCTL_MAGIC, 8, unsigned *)
-/* ZTE_Audio-LB_CJ_1 chenjun 2009-10-28 end */
-/* ZTE_Audio_CJ_100302, chenjun, 2010-3-2, end */
 
 struct msm_audio_pcm_config {
 	uint32_t pcm_feedback;	/* 0 - disable > 0 - enable */
@@ -361,5 +350,33 @@ struct msm_acdb_cmd_device {
 	uint32_t     *phys_buf;           /* Physical Address of data */
 };
 
+//LGE_SND_UPDATE_S [
+struct msm_snd_72xx_rpc_extcmd_config {
+    uint32_t rpc_extcmd;
+    uint32_t option;
 
+    uint32_t result;    
+};
+
+#define SND_72XX_RPC_EXTCMD _IOWR(SND_IOCTL_MAGIC, 8, struct msm_snd_72xx_rpc_extcmd_config *)
+
+struct msm_snd_audio_cal_config {
+    uint32_t nCalType;
+    uint32_t nCmd;
+    uint32_t nDevice;
+    uint32_t nIndex;
+    uint32_t nSubIndex;
+    uint32_t nItem;
+
+    uint32_t result;
+};
+
+#define SND_AUDIO_CAL _IOWR(SND_IOCTL_MAGIC, 9, struct msm_snd_audio_cal_config *)
+
+struct msm_snd_set_fm_radio_vol_param {
+	int32_t volume;
+};
+
+#define SND_SET_FM_RADIO_VOLUME _IOWR(SND_IOCTL_MAGIC, 17, int *)
+//LGE_SND_UPDATE_E ]
 #endif
