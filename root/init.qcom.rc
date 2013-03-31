@@ -1,5 +1,5 @@
 import init.qcom.usb.rc
-import init.pa.rc
+
 ###################
 ## 1: EARLY-INIT ##
 ###################
