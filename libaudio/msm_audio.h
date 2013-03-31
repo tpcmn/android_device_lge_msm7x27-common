@@ -207,6 +207,7 @@ struct msm_snd_endpoint {
 
 #define SND_AVC_CTL _IOW(SND_IOCTL_MAGIC, 6, unsigned *)
 #define SND_AGC_CTL _IOW(SND_IOCTL_MAGIC, 7, unsigned *)
+#define SND_SET_AUDIO_LOOPBACK _IOW(SND_IOCTL_MAGIC, 8, unsigned *) 
 
 struct msm_audio_pcm_config {
  uint32_t pcm_feedback;
@@ -251,6 +252,7 @@ struct msm_audio_event {
  int timeout_ms;
  union msm_audio_event_payload event_payload;
 };
+
 
 #define MSM_SNDDEV_CAP_RX 0x1
 #define MSM_SNDDEV_CAP_TX 0x2
