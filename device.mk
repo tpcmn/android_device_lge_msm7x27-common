@@ -92,6 +92,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/bluetooth/init.qcom.bt.sh:system/bin/init.qcom.bt.sh
 
 PRODUCT_PACKAGES += \
+    bluetoothd \
+    libbluetoothd \
     hcitool \
     hciconfig \
     hciattach \
