@@ -14,6 +14,12 @@
 # limitations under the License.
 #
 
+## Define BOARD_HAVE_BLUETOOTH_BLUEZ before device/qcom/msm7x27/BoardConfigCommon.mk
+## Bluetooth
+BOARD_HAVE_BLUETOOTH_BLUEZ := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+#BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt
+
 # Use the Qualcomm common folder
 include device/qcom/msm7x27/BoardConfigCommon.mk
 
@@ -84,10 +90,13 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE :=
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE_LEGACY := msm7x27 # temporary workaround
 BOARD_USES_QCOM_LIBRPC := true
 
-## Bluetooth
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt
 
+## GPS
+BOARD_USES_QCOM_LIBRPC := true
+BOARD_USES_QCOM_GPS := true
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
+BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE_LEGACY := msm7x27 # don't use hardware/qcom/gps version yet
 
 ## RIL
 BOARD_PROVIDES_LIBRIL := true
