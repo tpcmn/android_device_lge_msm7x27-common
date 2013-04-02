@@ -93,15 +93,12 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/bluetooth/init.qcom.bt.sh:system/bin/init.qcom.bt.sh
 
 PRODUCT_PACKAGES += \
-    bluetoothd \
-    libbluetoothd \
     hcitool \
     hciconfig \
     hciattach \
     brcm_patchram_plus \
     hwaddrs
 
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/root/checkbootreason:root/sbin/checkbootreason 
 # Offmode charging
 #PRODUCT_PACKAGES += \
 #    charger \
