@@ -111,6 +111,7 @@ $(call inherit-product, device/qcom/msm7x27/msm7x27.mk)
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
+#PRODUCT_AAPT_CONFIG := normal mdpi hdpi 
 
 # lge msm7x27-common overlays
 DEVICE_PACKAGE_OVERLAYS += device/lge/msm7x27-common/overlay
