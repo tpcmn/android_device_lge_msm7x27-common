@@ -1,11 +1,6 @@
 /*
 ** Copyright 2008, The Android Open-Source Project
-<<<<<<< HEAD
 ** Copyright (c) 2010, Code Aurora Forum. All rights reserved.
-=======
-** Copyright (c) 2012, Code Aurora Forum. All rights reserved.
-** Copyright (c) 2012, The CyanogenMod Project
->>>>>>> 6221c24... Move libaudio to lge-common
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -23,10 +18,6 @@
 #include <math.h>
 
 //#define LOG_NDEBUG 0
-<<<<<<< HEAD
-=======
-
->>>>>>> 6221c24... Move libaudio to lge-common
 #define LOG_TAG "AudioHardwareMSM72XX"
 #include <utils/Log.h>
 #include <utils/String8.h>
@@ -38,17 +29,10 @@
 #include <sys/stat.h>
 #include <dlfcn.h>
 #include <fcntl.h>
-<<<<<<< HEAD
-=======
-#include <errno.h>
-
-#include <cutils/properties.h> // for property_get
->>>>>>> 6221c24... Move libaudio to lge-common
 
 // hardware specific functions
 
 #include "AudioHardware.h"
-<<<<<<< HEAD
 #include <media/AudioRecord.h>
 
 #define LOG_SND_RPC 0  // Set to 1 to log sound RPC's
@@ -63,23 +47,6 @@
 #endif
 
 namespace android_audio_legacy {
-=======
-//#include <media/AudioRecord.h>
-
-#define LOG_SND_RPC 0  // Set to 1 to LOG sound RPC's
-
-//#define COMBO_DEVICE_SUPPORTED // Headset speaker combo device supported on this target
-#ifdef HAVE_FM_RADIO
-#define FM_ON_KEY "fm_on"
-#define FM_OFF_KEY "fm_off"
-#endif
-#define DUALMIC_KEY "dualmic_enabled"
-#define TTY_MODE_KEY "tty_mode"
-
-
-namespace android_audio_legacy {
-
->>>>>>> 6221c24... Move libaudio to lge-common
 static int audpre_index, tx_iir_index;
 static void * acoustic;
 const uint32_t AudioHardware::inputSamplingRates[] = {
@@ -88,10 +55,6 @@ const uint32_t AudioHardware::inputSamplingRates[] = {
 
 static int get_audpp_filter(void);
 static int msm72xx_enable_postproc(bool state);
-<<<<<<< HEAD
-=======
-static int msm72xx_enable_preproc(bool state);
->>>>>>> 6221c24... Move libaudio to lge-common
 
 // Post processing paramters
 static struct rx_iir_filter iir_cfg[3];
@@ -115,11 +78,7 @@ static bool playback_in_progress = false;
 static struct tx_iir tx_iir_cfg[9];
 static struct ns ns_cfg[9];
 static struct tx_agc tx_agc_cfg[9];
-<<<<<<< HEAD
 static int enable_preproc_mask;
-=======
-static int enable_preproc_mask[9];
->>>>>>> 6221c24... Move libaudio to lge-common
 
 static int snd_device = -1;
 
@@ -132,17 +91,9 @@ static int snd_device = -1;
 static uint32_t SND_DEVICE_CURRENT=-1;
 static uint32_t SND_DEVICE_HANDSET=-1;
 static uint32_t SND_DEVICE_SPEAKER=-1;
-<<<<<<< HEAD
 static uint32_t SND_DEVICE_BT=-1;
 static uint32_t SND_DEVICE_BT_EC_OFF=-1;
 static uint32_t SND_DEVICE_HEADSET=-1;
-=======
-static uint32_t SND_DEVICE_SPEAKER_IN_CALL=-1;
-static uint32_t SND_DEVICE_BT=-1;
-static uint32_t SND_DEVICE_BT_EC_OFF=-1;
-static uint32_t SND_DEVICE_HEADSET=-1;
-static uint32_t SND_DEVICE_HEADSET_STEREO=-1;
->>>>>>> 6221c24... Move libaudio to lge-common
 static uint32_t SND_DEVICE_HEADSET_AND_SPEAKER=-1;
 static uint32_t SND_DEVICE_IN_S_SADC_OUT_HANDSET=-1;
 static uint32_t SND_DEVICE_IN_S_SADC_OUT_SPEAKER_PHONE=-1;
@@ -150,39 +101,19 @@ static uint32_t SND_DEVICE_TTY_HEADSET=-1;
 static uint32_t SND_DEVICE_TTY_HCO=-1;
 static uint32_t SND_DEVICE_TTY_VCO=-1;
 static uint32_t SND_DEVICE_CARKIT=-1;
-<<<<<<< HEAD
 static uint32_t SND_DEVICE_FM_SPEAKER=-1;
 static uint32_t SND_DEVICE_FM_HEADSET=-1;
-=======
-#ifdef HAVE_FM_RADIO
-static uint32_t SND_DEVICE_FM_SPEAKER=-1;
-static uint32_t SND_DEVICE_FM_HEADSET=-1;
-#endif
->>>>>>> 6221c24... Move libaudio to lge-common
 static uint32_t SND_DEVICE_NO_MIC_HEADSET=-1;
 // ----------------------------------------------------------------------------
 
 AudioHardware::AudioHardware() :
     mInit(false), mMicMute(true), mBluetoothNrec(true), mBluetoothId(0),
-<<<<<<< HEAD
     mOutput(0), mSndEndpoints(NULL), mCurSndDevice(-1), mDualMicEnabled(false), mBuiltinMicSelected(false),
     mFmRadioEnabled(false),mFmPrev(false),mFmVolume(0),fmfd(-1)
 {
    if (get_audpp_filter() == 0) {
            audpp_filter_inited = true;
    }
-=======
-    mOutput(0), mSndEndpoints(NULL), mCurSndDevice(-1),
-    mDualMicEnabled(false), mBuiltinMicSelected(false),
-    mTtyMode(TTY_OFF)
-#ifdef HAVE_FM_RADIO
-    , mFmRadioEnabled(false), mFmPrev(false)
-#endif
-{
-    if (get_audpp_filter() == 0) {
-        audpp_filter_inited = true;
-    }
->>>>>>> 6221c24... Move libaudio to lge-common
 
     m7xsnddriverfd = open("/dev/msm_snd", O_RDWR);
     if (m7xsnddriverfd >= 0) {
@@ -200,32 +131,15 @@ AudioHardware::AudioHardware() :
                 CHECK_FOR(CURRENT);
                 CHECK_FOR(HANDSET);
                 CHECK_FOR(SPEAKER);
-<<<<<<< HEAD
                 CHECK_FOR(BT);
                 CHECK_FOR(BT_EC_OFF);
                 CHECK_FOR(HEADSET);
-=======
-                CHECK_FOR(SPEAKER_IN_CALL);
-                CHECK_FOR(BT);
-                CHECK_FOR(BT_EC_OFF);
-                CHECK_FOR(HEADSET);
-                CHECK_FOR(HEADSET_STEREO);
->>>>>>> 6221c24... Move libaudio to lge-common
                 CHECK_FOR(HEADSET_AND_SPEAKER);
                 CHECK_FOR(IN_S_SADC_OUT_HANDSET);
                 CHECK_FOR(IN_S_SADC_OUT_SPEAKER_PHONE);
                 CHECK_FOR(TTY_HEADSET);
                 CHECK_FOR(TTY_HCO);
                 CHECK_FOR(TTY_VCO);
-<<<<<<< HEAD
-=======
-                CHECK_FOR(CARKIT);
-#ifdef HAVE_FM_RADIO
-                CHECK_FOR(FM_SPEAKER);
-                CHECK_FOR(FM_HEADSET);
-#endif
-                CHECK_FOR(NO_MIC_HEADSET);
->>>>>>> 6221c24... Move libaudio to lge-common
 #undef CHECK_FOR
             }
         }
@@ -291,13 +205,7 @@ AudioHardware::~AudioHardware()
       close(m7xsnddriverfd);
       m7xsnddriverfd = -1;
     }
-<<<<<<< HEAD
     enable_preproc_mask = 0;
-=======
-    for (int index = 0; index < 9; index++) {
-        enable_preproc_mask[index] = 0;
-    }
->>>>>>> 6221c24... Move libaudio to lge-common
     mInit = false;
 }
 
@@ -310,7 +218,6 @@ AudioStreamOut* AudioHardware::openOutputStream(
         uint32_t devices, int *format, uint32_t *channels, uint32_t *sampleRate, status_t *status)
 {
     { // scope for the lock
-<<<<<<< HEAD
         android::Mutex::Autolock lock(mLock);
 
         AudioStreamOutMSM72xx* out;
@@ -322,20 +229,6 @@ AudioStreamOut* AudioHardware::openOutputStream(
             out = new AudioStreamOutMSM72xx();
         }
 
-=======
-        Mutex::Autolock lock(mLock);
-
-        // only one output stream allowed
-        if (mOutput) {
-            if (status) {
-                *status = INVALID_OPERATION;
-            }
-            return 0;
-        }
-
-        // create new output stream
-        AudioStreamOutMSM72xx* out = new AudioStreamOutMSM72xx();
->>>>>>> 6221c24... Move libaudio to lge-common
         status_t lStatus = out->set(this, devices, format, channels, sampleRate);
         if (status) {
             *status = lStatus;
@@ -350,11 +243,7 @@ AudioStreamOut* AudioHardware::openOutputStream(
 }
 
 void AudioHardware::closeOutputStream(AudioStreamOut* out) {
-<<<<<<< HEAD
     android::Mutex::Autolock lock(mLock);
-=======
-    Mutex::Autolock lock(mLock);
->>>>>>> 6221c24... Move libaudio to lge-common
     if (mOutput == 0 || mOutput != out) {
         ALOGW("Attempt to close invalid output stream");
     }
@@ -373,20 +262,6 @@ AudioStreamIn* AudioHardware::openInputStream(
         return 0;
     }
 
-<<<<<<< HEAD
-=======
-    if ( (mMode == AudioSystem::MODE_IN_CALL) &&
-         (getInputSampleRate(*sampleRate) > AUDIO_HW_IN_SAMPLERATE) &&
-         (*format == AUDIO_HW_IN_FORMAT) )
-    {
-        ALOGE("PCM recording, in a voice call, with sample rate more than 8K not supported \
-                re-configure with 8K and try software re-sampler ");
-        *status = BAD_VALUE;
-        *sampleRate = AUDIO_HW_IN_SAMPLERATE;
-        return 0;
-    }
-
->>>>>>> 6221c24... Move libaudio to lge-common
     mLock.lock();
 
     AudioStreamInMSM72xx* in = new AudioStreamInMSM72xx();
@@ -407,11 +282,7 @@ AudioStreamIn* AudioHardware::openInputStream(
 }
 
 void AudioHardware::closeInputStream(AudioStreamIn* in) {
-<<<<<<< HEAD
     android::Mutex::Autolock lock(mLock);
-=======
-    Mutex::Autolock lock(mLock);
->>>>>>> 6221c24... Move libaudio to lge-common
 
     ssize_t index = mInputs.indexOf((AudioStreamInMSM72xx *)in);
     if (index < 0) {
@@ -446,11 +317,7 @@ bool AudioHardware::checkOutputStandby()
 
 status_t AudioHardware::setMicMute(bool state)
 {
-<<<<<<< HEAD
     android::Mutex::Autolock lock(mLock);
-=======
-    Mutex::Autolock lock(mLock);
->>>>>>> 6221c24... Move libaudio to lge-common
     return setMicMute_nosync(state);
 }
 
@@ -472,11 +339,7 @@ status_t AudioHardware::getMicMute(bool* state)
 
 status_t AudioHardware::setParameters(const String8& keyValuePairs)
 {
-<<<<<<< HEAD
     android::AudioParameter param = android::AudioParameter(keyValuePairs);
-=======
-    AudioParameter param = AudioParameter(keyValuePairs);
->>>>>>> 6221c24... Move libaudio to lge-common
     String8 value;
     String8 key;
     const char BT_NREC_KEY[] = "bt_headset_nrec";
@@ -515,7 +378,6 @@ status_t AudioHardware::setParameters(const String8& keyValuePairs)
         }
     }
 
-<<<<<<< HEAD
 #ifdef HAVE_FM_RADIO
     key = String8(android::AudioParameter::keyFmOn);
     int devices;
@@ -528,8 +390,6 @@ status_t AudioHardware::setParameters(const String8& keyValuePairs)
     }
 #endif
 
-=======
->>>>>>> 6221c24... Move libaudio to lge-common
     key = String8(DUALMIC_KEY);
     if (param.get(key, value) == NO_ERROR) {
         if (value == "true") {
@@ -553,31 +413,9 @@ status_t AudioHardware::setParameters(const String8& keyValuePairs)
         } else {
             mTtyMode = TTY_OFF;
         }
-<<<<<<< HEAD
     } else {
 	mTtyMode = TTY_OFF;
     }
-=======
-        if(mMode != AudioSystem::MODE_IN_CALL){
-           return NO_ERROR;
-        }
-    } else {
-        mTtyMode = TTY_OFF;
-    }
-
-#ifdef HAVE_FM_RADIO
-    key = String8(FM_ON_KEY);
-    int devices;
-    if (param.getInt(key, devices) == NO_ERROR) {
-       setFmOnOff(true);
-    }
-    key = String8(FM_OFF_KEY);
-    if (param.getInt(key, devices) == NO_ERROR) {
-       setFmOnOff(false);
-    }
-#endif
-    
->>>>>>> 6221c24... Move libaudio to lge-common
     doRouting(NULL);
 
     return NO_ERROR;
@@ -585,11 +423,7 @@ status_t AudioHardware::setParameters(const String8& keyValuePairs)
 
 String8 AudioHardware::getParameters(const String8& keys)
 {
-<<<<<<< HEAD
     android::AudioParameter param = android::AudioParameter(keys);
-=======
-    AudioParameter param = AudioParameter(keys);
->>>>>>> 6221c24... Move libaudio to lge-common
     String8 value;
 
     String8 key = String8(DUALMIC_KEY);
@@ -889,11 +723,7 @@ int check_and_set_audpp_parameters(char *buf, int size)
 
         ALOGV("TX IIR flag = %02x.", txiir_flag[device_id]);
         if (txiir_flag[device_id] != 0)
-<<<<<<< HEAD
              enable_preproc_mask |= TX_IIR_ENABLE;
-=======
-             enable_preproc_mask[samp_index] |= TX_IIR_ENABLE;
->>>>>>> 6221c24... Move libaudio to lge-common
         } else if(buf[0] == 'F')  {
         /* AGC filter */
         if (!(p = strtok(buf, ",")))
@@ -935,13 +765,8 @@ int check_and_set_audpp_parameters(char *buf, int size)
 
         agc_flag[device_id] = (uint16_t)strtol(p, &ps, 16);
         ALOGV("AGC flag = %02x.", agc_flag[device_id]);
-<<<<<<< HEAD
         if (agc_flag[device_id != 0])
             enable_preproc_mask |= AGC_ENABLE;
-=======
-        if (agc_flag[device_id] != 0)
-            enable_preproc_mask[samp_index] |= AGC_ENABLE;
->>>>>>> 6221c24... Move libaudio to lge-common
         } else if ((buf[0] == 'G')) {
         /* This is the NS record we are looking for.  Tokenize it */
         if (!(p = strtok(buf, ",")))
@@ -991,11 +816,7 @@ int check_and_set_audpp_parameters(char *buf, int size)
 
         ALOGV("NS flag = %02x.", ns_flag[device_id]);
         if (ns_flag[device_id] != 0)
-<<<<<<< HEAD
             enable_preproc_mask |= NS_ENABLE;
-=======
-            enable_preproc_mask[samp_index] |= NS_ENABLE;
->>>>>>> 6221c24... Move libaudio to lge-common
         }
     }
     return 0;
@@ -1044,11 +865,7 @@ static int get_audpp_filter(void)
 
     current_str = read_buf;
 
-<<<<<<< HEAD
     while (1) {
-=======
-    while (*current_str != (char)EOF)  {
->>>>>>> 6221c24... Move libaudio to lge-common
         int len;
         next_str = strchr(current_str, '\n');
         if (!next_str)
@@ -1094,17 +911,10 @@ static int msm72xx_enable_postproc(bool state)
         device_id = 1;
         ALOGI("set device to SND_DEVICE_HANDSET device_id=1");
     }
-<<<<<<< HEAD
     if(snd_device == SND_DEVICE_HEADSET)
     {
         device_id = 2;
         ALOGI("set device to SND_DEVICE_HEADSET device_id=2");
-=======
-    if(snd_device == SND_DEVICE_HEADSET_STEREO || snd_device == SND_DEVICE_HEADSET)
-    {
-        device_id = 2;
-        ALOGI("set device to SND_DEVICE_HEADSET_STEREO/SND_DEVICE_HEADSET device_id=2");
->>>>>>> 6221c24... Move libaudio to lge-common
     }
 
     fd = open(PCM_CTL_DEVICE, O_RDWR);
@@ -1204,21 +1014,12 @@ static int msm72xx_enable_postproc(bool state)
     } else{
         int disable_mask = 0;
 
-<<<<<<< HEAD
         if(post_proc_feature_mask & MBADRC_ENABLE) disable_mask |= MBADRC_DISABLE;
         if(post_proc_feature_mask & ADRC_ENABLE) disable_mask |= ADRC_DISABLE;
         if(post_proc_feature_mask & EQ_ENABLE) disable_mask |= EQ_DISABLE;
         if(post_proc_feature_mask & RX_IIR_ENABLE) disable_mask |= RX_IIR_DISABLE;
 
         ALOGI("disabling post proc features with mask 0x%04x", post_proc_feature_mask);
-=======
-        if(post_proc_feature_mask & MBADRC_ENABLE) disable_mask &= MBADRC_DISABLE;
-        if(post_proc_feature_mask & ADRC_ENABLE) disable_mask &= ADRC_DISABLE;
-        if(post_proc_feature_mask & EQ_ENABLE) disable_mask &= EQ_DISABLE;
-        if(post_proc_feature_mask & RX_IIR_ENABLE) disable_mask &= RX_IIR_DISABLE;
-
-        ALOGI("disabling post proc features with mask 0x%04x", disable_mask);
->>>>>>> 6221c24... Move libaudio to lge-common
         if (ioctl(fd, AUDIO_ENABLE_AUDPP, &disable_mask) < 0) {
             ALOGE("enable audpp error");
             close(fd);
@@ -1258,17 +1059,10 @@ size_t AudioHardware::getInputBufferSize(uint32_t sampleRate, int format, int ch
         return 0;
     }
 
-<<<<<<< HEAD
     if(format == AudioSystem::AMR_NB)
        return 320*channelCount;
     else if (format == AudioSystem::AAC)
        return 2048;
-=======
-    if (format == AudioSystem::AAC)
-       return 2048;
-    else if (format == AudioSystem::AMR_NB)
-       return 320*channelCount;
->>>>>>> 6221c24... Move libaudio to lge-common
     else
        return 2048*channelCount;
 }
@@ -1319,11 +1113,7 @@ status_t AudioHardware::setVoiceVolume(float v)
         v = 1.0;
     }
 
-<<<<<<< HEAD
     int vol = lrint(v * 7.0);
-=======
-    int vol = lrint(v * 6.0) + 1;
->>>>>>> 6221c24... Move libaudio to lge-common
     ALOGD("setVoiceVolume(%f)\n", v);
     ALOGI("Setting in-call volume to %d (available range is 0 to 7)\n", vol);
 
@@ -1333,47 +1123,27 @@ status_t AudioHardware::setVoiceVolume(float v)
         ALOGI("For TTY device in FULL or VCO mode, the volume level is set to: %d \n", vol);
     }
 
-<<<<<<< HEAD
     android::Mutex::Autolock lock(mLock);
-=======
-    Mutex::Autolock lock(mLock);
->>>>>>> 6221c24... Move libaudio to lge-common
     set_volume_rpc(SND_DEVICE_CURRENT, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     return NO_ERROR;
 }
 
 status_t AudioHardware::setMasterVolume(float v)
 {
-<<<<<<< HEAD
     android::Mutex::Autolock lock(mLock);
-=======
-    Mutex::Autolock lock(mLock);
->>>>>>> 6221c24... Move libaudio to lge-common
     int vol = ceil(v * 7.0);
     ALOGI("Set master volume to %d.\n", vol);
     set_volume_rpc(SND_DEVICE_HANDSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_SPEAKER, SND_METHOD_VOICE, vol, m7xsnddriverfd);
-<<<<<<< HEAD
     set_volume_rpc(SND_DEVICE_BT,      SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_HEADSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_IN_S_SADC_OUT_HANDSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_IN_S_SADC_OUT_SPEAKER_PHONE, SND_METHOD_VOICE, vol, m7xsnddriverfd);
-=======
-    set_volume_rpc(SND_DEVICE_SPEAKER_IN_CALL, SND_METHOD_VOICE, vol, m7xsnddriverfd);
-    set_volume_rpc(SND_DEVICE_BT,      SND_METHOD_VOICE, vol, m7xsnddriverfd);
-    set_volume_rpc(SND_DEVICE_HEADSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
-    set_volume_rpc(SND_DEVICE_HEADSET_STEREO, SND_METHOD_VOICE, vol, m7xsnddriverfd);
-    set_volume_rpc(SND_DEVICE_IN_S_SADC_OUT_HANDSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
-    set_volume_rpc(SND_DEVICE_IN_S_SADC_OUT_SPEAKER_PHONE, SND_METHOD_VOICE, vol, m7xsnddriverfd);
-    set_volume_rpc(SND_DEVICE_TTY_HEADSET, SND_METHOD_VOICE, 1, m7xsnddriverfd);
-    set_volume_rpc(SND_DEVICE_TTY_VCO, SND_METHOD_VOICE, 1, m7xsnddriverfd);
->>>>>>> 6221c24... Move libaudio to lge-common
     // We return an error code here to let the audioflinger do in-software
     // volume on top of the maximum volume that we set through the SND API.
     // return error - software mixer will handle it
     return -1;
 }
-<<<<<<< HEAD
 
 #ifdef HAVE_FM_RADIO
 status_t AudioHardware::setFmOnOff(int onoff)
@@ -1396,38 +1166,6 @@ status_t AudioHardware::setFmOnOff(int onoff)
     }
     ALOGV("mFmRadioEnabled=%d", mFmRadioEnabled);
     return doRouting(NULL);
-=======
-#ifdef HAVE_FM_RADIO
-status_t AudioHardware::setFmVolume(float v)
-{
-    if (v < 0.0) {
-        ALOGW("setFmVolume(%f) under 0.0, assuming 0.0\n", v);
-        v = 0.0;
-    } else if (v > 1.0) {
-        ALOGW("setFmVolume(%f) over 1.0, assuming 1.0\n", v);
-        v = 1.0;
-    }
-    ALOGD("setFmVolume(%f)\n", v);
-
-    // FM volume range: 0-20
-    int fm_vol  = lrint(v * 20);
-    struct msm_snd_set_fm_radio_vol_param args;
-    args.volume = fm_vol;
-
-    if (ioctl(m7xsnddriverfd, SND_SET_FM_RADIO_VOLUME, &args) < 0) {
-        ALOGE("snd_set_fm_radio_volume error.");
-        return -EIO;
-    }
-
-    ALOGD("snd_set_fm_radio_volume(%d)\n", fm_vol);
-    return NO_ERROR;
-}
-
-status_t AudioHardware::setFmOnOff(bool onoff)
-{
-    mFmRadioEnabled = onoff;
-    return NO_ERROR;
->>>>>>> 6221c24... Move libaudio to lge-common
 }
 #endif
 
@@ -1459,11 +1197,7 @@ static status_t do_route_audio_rpc(uint32_t device,
     args.device = device;
     args.ear_mute = ear_mute ? SND_MUTE_MUTED : SND_MUTE_UNMUTED;
     if((device != SND_DEVICE_CURRENT) && (!mic_mute)) {
-<<<<<<< HEAD
         //Explicitly mute the mic to release DSP resources
-=======
-       //Explicitly mute the mic to release DSP resources
->>>>>>> 6221c24... Move libaudio to lge-common
         args.mic_mute = SND_MUTE_MUTED;
         if (ioctl(m7xsnddriverfd, SND_SET_DEVICE, &args) < 0) {
             ALOGE("snd_set_device error.");
@@ -1483,10 +1217,6 @@ static status_t do_route_audio_rpc(uint32_t device,
 // always call with mutex held
 status_t AudioHardware::doAudioRouteOrMute(uint32_t device)
 {
-<<<<<<< HEAD
-=======
-
->>>>>>> 6221c24... Move libaudio to lge-common
 #if 0
     if (device == (uint32_t)SND_DEVICE_BT || device == (uint32_t)SND_DEVICE_CARKIT) {
         if (mBluetoothId) {
@@ -1502,53 +1232,31 @@ status_t AudioHardware::doAudioRouteOrMute(uint32_t device)
     /* Android >= 2.0 advises to use STREAM_VOICE_CALL streams and setSpeakerphoneOn() */
     /* Android >= 2.3 uses MODE_IN_COMMUNICATION for SIP calls */
     bool mute = !isInCall();
-<<<<<<< HEAD
     if(mute && (device == SND_DEVICE_HANDSET)) {
-=======
-    if (mute && (device == SND_DEVICE_HANDSET)) {
->>>>>>> 6221c24... Move libaudio to lge-common
         /* workaround to emulate Android >= 2.0 behaviour */
         /* enable routing to earpiece (unmute) if mic is selected as input */
         mute = !mBuiltinMicSelected;
     }
-<<<<<<< HEAD
 
     mFmPrev=mFmRadioEnabled;
 #ifdef HAVE_FM_RADIO
     if(mFmRadioEnabled && (device == SND_DEVICE_HEADSET)) {
-=======
-#ifdef HAVE_FM_RADIO
-    mFmPrev = mFmRadioEnabled;
-
-    if (mFmRadioEnabled) {
->>>>>>> 6221c24... Move libaudio to lge-common
       mute = 0;
       ALOGI("unmute for radio");
     }
 #endif
-<<<<<<< HEAD
 
     ALOGD("doAudioRouteOrMute() device %x, mMode %d, mMicMute %d, mBuiltinMicSelected %d, %s",
         device, mMode, mMicMute, mBuiltinMicSelected, mute ? "muted" : "audio circuit active");
     return do_route_audio_rpc(device, mute, mMicMute, m7xsnddriverfd);
 
-=======
-    ALOGD("doAudioRouteOrMute() device %x, mMode %d, mMicMute %d, mBuiltinMicSelected %d, %s",
-        device, mMode, mMicMute, mBuiltinMicSelected, mute ? "muted" : "audio circuit active");
-
-    return do_route_audio_rpc(device, mute, mMicMute, m7xsnddriverfd);
->>>>>>> 6221c24... Move libaudio to lge-common
 }
 
 status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
 {
     /* currently this code doesn't work without the htc libacoustic */
 
-<<<<<<< HEAD
     android::Mutex::Autolock lock(mLock);
-=======
-    Mutex::Autolock lock(mLock);
->>>>>>> 6221c24... Move libaudio to lge-common
     uint32_t outputDevices = mOutput->devices();
     status_t ret = NO_ERROR;
     int new_snd_device = -1;
@@ -1614,7 +1322,6 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
         } else if (outputDevices & AudioSystem::DEVICE_OUT_BLUETOOTH_SCO_CARKIT) {
             ALOGI("Routing audio to Bluetooth PCM\n");
             new_snd_device = SND_DEVICE_CARKIT;
-<<<<<<< HEAD
 #if defined(COMBO_DEVICE_SUPPORTED) && COMBO_DEVICE_SUPPORTED
         } else if ((outputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADSET) &&
                    (outputDevices & AudioSystem::DEVICE_OUT_SPEAKER)) {
@@ -1640,105 +1347,6 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
             new_snd_device = SND_DEVICE_SPEAKER;
             new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
         } else {
-=======
-#ifdef COMBO_DEVICE_SUPPORTED
-        } else if ((outputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADSET) &&
-                   (outputDevices & AudioSystem::DEVICE_OUT_SPEAKER)) {
-#ifdef HAVE_FM_RADIO
-            if (mFmRadioEnabled) {
-                ALOGI("Routing audio to FM Speakerphone\n");
-                new_snd_device = SND_DEVICE_FM_SPEAKER;
-                new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
-                new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
-            } else
-#endif
-            {
-                ALOGI("Routing audio to Wired Headset and Speaker\n");
-                new_snd_device = SND_DEVICE_HEADSET_AND_SPEAKER;
-                new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
-            }
-        } else if (outputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADPHONE) {
-            if (outputDevices & AudioSystem::DEVICE_OUT_SPEAKER) {
-#ifdef HAVE_FM_RADIO
-                if (mFmRadioEnabled) {
-                    ALOGI("Routing audio to FM Speakerphone\n");
-                    new_snd_device = SND_DEVICE_FM_SPEAKER;
-                    new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
-                    new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
-                } else
-#endif
-                {
-                    ALOGI("Routing audio to No microphone Wired Headset and Speaker (%d,%x)\n", mMode, outputDevices);
-                    new_snd_device = SND_DEVICE_HEADSET_AND_SPEAKER;
-                    new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
-                }
-            } else {
-#ifdef HAVE_FM_RADIO
-                if (mFmRadioEnabled) {
-                    ALOGI("Routing audio to FM Headset\n");
-                    new_snd_device = SND_DEVICE_FM_HEADSET;
-                    new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
-                    new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
-                } else
-#endif
-                {
-                    ALOGI("Routing audio to No microphone Wired Headset (%d,%x)\n", mMode, outputDevices);
-                    new_snd_device = SND_DEVICE_NO_MIC_HEADSET;
-                }
-            }
-#endif // COMBO_DEVICE_SUPPORTED
-        } else if (outputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADSET) {
-#ifdef HAVE_FM_RADIO
-            if (mFmRadioEnabled) {
-                ALOGI("Routing FM audio to Wired Headset\n");
-                new_snd_device = SND_DEVICE_FM_HEADSET;
-                new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
-                new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
-            } else
-#endif
-            {
-                ALOGI("Routing audio to Wired Headset\n");
-                new_snd_device = SND_DEVICE_HEADSET_STEREO; //STEREO
-                new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
-            }
-        } else if (outputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADPHONE) {
-#ifdef HAVE_FM_RADIO
-            if (mFmRadioEnabled) {
-                ALOGI("Routing audio to FM Headset\n");
-                new_snd_device = SND_DEVICE_FM_HEADSET;
-                new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
-                new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
-            } else
-#endif
-            {
-                ALOGI("Routing audio to Wired Headset\n");
-                new_snd_device = SND_DEVICE_HEADSET_STEREO; //STEREO
-                new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
-            }
-        } else if (outputDevices & AudioSystem::DEVICE_OUT_SPEAKER) {
-#ifdef HAVE_FM_RADIO
-            if (mFmRadioEnabled) {
-                ALOGI("Routing audio to FM Speakerphone\n");
-                new_snd_device = SND_DEVICE_FM_SPEAKER;
-                new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
-                new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
-            } else
-#endif
-            {
-                ALOGI("Routing audio to Speakerphone\n");
-                new_snd_device = SND_DEVICE_SPEAKER;
-                new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
-            }
-        }
-#ifdef P500_SPEAKER_IN_CALL_FIX
-        else if (outputDevices &  OutputDevices_SPEAKER_IN_CALL) {
-            ALOGI("Routing audio to Speaker in call\n");
-            new_snd_device = SND_DEVICE_SPEAKER_IN_CALL;
-            new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
-        }
-#endif
-        else {
->>>>>>> 6221c24... Move libaudio to lge-common
             ALOGI("Routing audio to Handset\n");
             new_snd_device = SND_DEVICE_HANDSET;
             new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
@@ -1755,35 +1363,18 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
         }
     }
 
-<<<<<<< HEAD
     if ((new_snd_device != -1 && new_snd_device != mCurSndDevice) || mFmRadioEnabled != mFmPrev) {
         ret = doAudioRouteOrMute(new_snd_device);
 
        //disable post proc first for previous session
        if(playback_in_progress)
-=======
-    if ( (new_snd_device != -1 && new_snd_device != mCurSndDevice)
-#ifdef HAVE_FM_RADIO
-     ||  (mFmRadioEnabled != mFmPrev)
-#endif     
-     )
-    {
-        ret = doAudioRouteOrMute(new_snd_device);
-
-       //disable post proc first for previous session
-       if (playback_in_progress)
->>>>>>> 6221c24... Move libaudio to lge-common
            msm72xx_enable_postproc(false);
 
        //enable post proc for new device
        snd_device = new_snd_device;
        post_proc_feature_mask = new_post_proc_feature_mask;
 
-<<<<<<< HEAD
        if(playback_in_progress)
-=======
-       if (playback_in_progress)
->>>>>>> 6221c24... Move libaudio to lge-common
            msm72xx_enable_postproc(true);
 
        mCurSndDevice = new_snd_device;
@@ -1794,11 +1385,7 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
 
 status_t AudioHardware::checkMicMute()
 {
-<<<<<<< HEAD
     android::Mutex::Autolock lock(mLock);
-=======
-    Mutex::Autolock lock(mLock);
->>>>>>> 6221c24... Move libaudio to lge-common
     if (mMode != AudioSystem::MODE_IN_CALL) {
         setMicMute_nosync(true);
     }
@@ -1911,11 +1498,7 @@ AudioHardware::AudioStreamOutMSM72xx::~AudioStreamOutMSM72xx()
 
 ssize_t AudioHardware::AudioStreamOutMSM72xx::write(const void* buffer, size_t bytes)
 {
-<<<<<<< HEAD
     // LOGD("AudioStreamOutMSM72xx::write(%p, %u)", buffer, bytes);
-=======
-    // ALOGD("AudioStreamOutMSM72xx::write(%p, %u)", buffer, bytes);
->>>>>>> 6221c24... Move libaudio to lge-common
     status_t status = NO_INIT;
     size_t count = bytes;
     const uint8_t* p = static_cast<const uint8_t*>(buffer);
@@ -2046,13 +1629,8 @@ bool AudioHardware::AudioStreamOutMSM72xx::checkStandby()
 
 status_t AudioHardware::AudioStreamOutMSM72xx::setParameters(const String8& keyValuePairs)
 {
-<<<<<<< HEAD
     android::AudioParameter param = android::AudioParameter(keyValuePairs);
     String8 key = String8(android::AudioParameter::keyRouting);
-=======
-    AudioParameter param = AudioParameter(keyValuePairs);
-    String8 key = String8(AudioParameter::keyRouting);
->>>>>>> 6221c24... Move libaudio to lge-common
     status_t status = NO_ERROR;
     int device;
     ALOGV("AudioStreamOutMSM72xx::setParameters() %s", keyValuePairs.string());
@@ -2060,11 +1638,7 @@ status_t AudioHardware::AudioStreamOutMSM72xx::setParameters(const String8& keyV
     if (param.getInt(key, device) == NO_ERROR) {
         mDevices = device;
         ALOGV("set output routing %x", mDevices);
-<<<<<<< HEAD
 	status = mHardware->setParameters(keyValuePairs);
-=======
-        status = mHardware->setParameters(keyValuePairs);
->>>>>>> 6221c24... Move libaudio to lge-common
         status = mHardware->doRouting(NULL);
         param.remove(key);
     }
@@ -2077,15 +1651,9 @@ status_t AudioHardware::AudioStreamOutMSM72xx::setParameters(const String8& keyV
 
 String8 AudioHardware::AudioStreamOutMSM72xx::getParameters(const String8& keys)
 {
-<<<<<<< HEAD
     android::AudioParameter param = android::AudioParameter(keys);
     String8 value;
     String8 key = String8(android::AudioParameter::keyRouting);
-=======
-    AudioParameter param = AudioParameter(keys);
-    String8 value;
-    String8 key = String8(AudioParameter::keyRouting);
->>>>>>> 6221c24... Move libaudio to lge-common
 
     if (param.get(key, value) == NO_ERROR) {
         ALOGV("get routing %x", mDevices);
@@ -2125,10 +1693,6 @@ status_t AudioHardware::AudioStreamInMSM72xx::set(
         ALOGE("audio format bad value");
         return BAD_VALUE;
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 6221c24... Move libaudio to lge-common
     if (pRate == 0) {
         return BAD_VALUE;
     }
@@ -2210,14 +1774,8 @@ status_t AudioHardware::AudioStreamInMSM72xx::set(
     mSampleRate = config.sample_rate;
     mBufferSize = config.buffer_size;
     }
-<<<<<<< HEAD
     else if(*pFormat == AudioSystem::AMR_NB)
       {
-=======
-    else if( (*pFormat == AudioSystem::AMR_NB)
-             )
-           {
->>>>>>> 6221c24... Move libaudio to lge-common
 
       // open vocie memo input device
       status = ::open(VOICE_MEMO_DEVICE, O_RDWR);
@@ -2278,10 +1836,7 @@ status_t AudioHardware::AudioStreamInMSM72xx::set(
           break;
         }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 6221c24... Move libaudio to lge-common
         default:
         break;
       }
@@ -2355,7 +1910,6 @@ status_t AudioHardware::AudioStreamInMSM72xx::set(
     //if (!acoustic)
     //    return NO_ERROR;
 
-<<<<<<< HEAD
     if (audpp_filter_inited)
     {
         int fd;
@@ -2364,31 +1918,6 @@ status_t AudioHardware::AudioStreamInMSM72xx::set(
              ALOGE("wrong sampling rate");
              goto Error;
         }
-=======
-    audpre_index = calculate_audpre_table_index(mSampleRate);
-    if(audpre_index < 0) {
-        ALOGE("wrong sampling rate");
-        status = -EINVAL;
-        goto Error;
-    }
-    return NO_ERROR;
-
-Error:
-    if (mFd >= 0) {
-        ::close(mFd);
-        mFd = -1;
-    }
-    return status;
-}
-
-static int msm72xx_enable_preproc(bool state)
-{
-    uint16_t mask = 0x0000;
-
-    if (audpp_filter_inited)
-    {
-        int fd;
->>>>>>> 6221c24... Move libaudio to lge-common
 
         fd = open(PREPROC_CTL_DEVICE, O_RDWR);
         if (fd < 0) {
@@ -2396,11 +1925,7 @@ static int msm72xx_enable_preproc(bool state)
              return -EPERM;
         }
 
-<<<<<<< HEAD
         if (enable_preproc_mask & AGC_ENABLE) {
-=======
-        if (enable_preproc_mask[audpre_index] & AGC_ENABLE) {
->>>>>>> 6221c24... Move libaudio to lge-common
             /* Setting AGC Params */
             ALOGI("AGC Filter Param1= %02x.", tx_agc_cfg[audpre_index].cmd_id);
             ALOGI("AGC Filter Param2= %02x.", tx_agc_cfg[audpre_index].tx_agc_param_mask);
@@ -2409,22 +1934,14 @@ static int msm72xx_enable_preproc(bool state)
             ALOGI("AGC Filter Param5= %02x.", tx_agc_cfg[audpre_index].adaptive_gain_flag);
             ALOGI("AGC Filter Param6= %02x.", tx_agc_cfg[audpre_index].agc_params[0]);
             ALOGI("AGC Filter Param7= %02x.", tx_agc_cfg[audpre_index].agc_params[18]);
-<<<<<<< HEAD
             if ((enable_preproc_mask & AGC_ENABLE) &&
-=======
-            if ((enable_preproc_mask[audpre_index] & AGC_ENABLE) &&
->>>>>>> 6221c24... Move libaudio to lge-common
                 (ioctl(fd, AUDIO_SET_AGC, &tx_agc_cfg[audpre_index]) < 0))
             {
                 ALOGE("set AGC filter error.");
             }
         }
 
-<<<<<<< HEAD
         if (enable_preproc_mask & NS_ENABLE) {
-=======
-        if (enable_preproc_mask[audpre_index] & NS_ENABLE) {
->>>>>>> 6221c24... Move libaudio to lge-common
             /* Setting NS Params */
             ALOGI("NS Filter Param1= %02x.", ns_cfg[audpre_index].cmd_id);
             ALOGI("NS Filter Param2= %02x.", ns_cfg[audpre_index].ec_mode_new);
@@ -2434,22 +1951,14 @@ static int msm72xx_enable_preproc(bool state)
             ALOGI("NS Filter Param6= %02x.", ns_cfg[audpre_index].dens_limit_ns_d);
             ALOGI("NS Filter Param7= %02x.", ns_cfg[audpre_index].wb_gamma_e);
             ALOGI("NS Filter Param8= %02x.", ns_cfg[audpre_index].wb_gamma_n);
-<<<<<<< HEAD
             if ((enable_preproc_mask & NS_ENABLE) &&
-=======
-            if ((enable_preproc_mask[audpre_index] & NS_ENABLE) &&
->>>>>>> 6221c24... Move libaudio to lge-common
                 (ioctl(fd, AUDIO_SET_NS, &ns_cfg[audpre_index]) < 0))
             {
                 ALOGE("set NS filter error.");
             }
         }
 
-<<<<<<< HEAD
         if (enable_preproc_mask & TX_IIR_ENABLE) {
-=======
-        if (enable_preproc_mask[audpre_index] & TX_IIR_ENABLE) {
->>>>>>> 6221c24... Move libaudio to lge-common
             /* Setting TX_IIR Params */
             ALOGI("TX_IIR Filter Param1= %02x.", tx_iir_cfg[audpre_index].cmd_id);
             ALOGI("TX_IIR Filter Param2= %02x.", tx_iir_cfg[audpre_index].active_flag);
@@ -2457,40 +1966,21 @@ static int msm72xx_enable_preproc(bool state)
             ALOGI("TX_IIR Filter Param4= %02x.", tx_iir_cfg[audpre_index].iir_params[0]);
             ALOGI("TX_IIR Filter Param5= %02x.", tx_iir_cfg[audpre_index].iir_params[1]);
             ALOGI("TX_IIR Filter Param6 %02x.", tx_iir_cfg[audpre_index].iir_params[47]);
-<<<<<<< HEAD
             if ((enable_preproc_mask & TX_IIR_ENABLE) &&
-=======
-            if ((enable_preproc_mask[audpre_index] & TX_IIR_ENABLE) &&
->>>>>>> 6221c24... Move libaudio to lge-common
                 (ioctl(fd, AUDIO_SET_TX_IIR, &tx_iir_cfg[audpre_index]) < 0))
             {
                ALOGE("set TX IIR filter error.");
             }
         }
-<<<<<<< HEAD
         /*Setting AUDPRE_ENABLE*/
         if (ioctl(fd, AUDIO_ENABLE_AUDPRE, &enable_preproc_mask) < 0)
         {
            ALOGE("set AUDPRE_ENABLE error.");
-=======
-
-        if (state == true) {
-            /*Setting AUDPRE_ENABLE*/
-            if (ioctl(fd, AUDIO_ENABLE_AUDPRE, &enable_preproc_mask[audpre_index]) < 0) {
-                ALOGE("set AUDPRE_ENABLE error.");
-            }
-        } else {
-            /*Setting AUDPRE_ENABLE*/
-            if (ioctl(fd, AUDIO_ENABLE_AUDPRE, &mask) < 0) {
-                ALOGE("set AUDPRE_ENABLE error.");
-            }
->>>>>>> 6221c24... Move libaudio to lge-common
         }
         close(fd);
     }
 
     return NO_ERROR;
-<<<<<<< HEAD
 
 Error:
     if (mFd >= 0) {
@@ -2498,8 +1988,6 @@ Error:
         mFd = -1;
     }
     return status;
-=======
->>>>>>> 6221c24... Move libaudio to lge-common
 }
 
 AudioHardware::AudioStreamInMSM72xx::~AudioStreamInMSM72xx()
@@ -2517,13 +2005,8 @@ ssize_t AudioHardware::AudioStreamInMSM72xx::read( void* buffer, ssize_t bytes)
     size_t  aac_framesize= bytes;
     uint8_t* p = static_cast<uint8_t*>(buffer);
     uint32_t* recogPtr = (uint32_t *)p;
-<<<<<<< HEAD
     uint16_t* frameCountPtr;
     uint16_t* frameSizePtr;
-=======
-    uint16_t* frameCountPtr = 0;
-    uint16_t* frameSizePtr = 0;
->>>>>>> 6221c24... Move libaudio to lge-common
 
     if (mState < AUDIO_INPUT_OPENED) {
         AudioHardware *hw = mHardware;
@@ -2546,10 +2029,6 @@ ssize_t AudioHardware::AudioStreamInMSM72xx::read( void* buffer, ssize_t bytes)
             standby();
             return -1;
         }
-<<<<<<< HEAD
-=======
-        msm72xx_enable_preproc(true);
->>>>>>> 6221c24... Move libaudio to lge-common
     }
 
     // Resetting the bytes value, to return the appropriate read value
@@ -2592,15 +2071,9 @@ ssize_t AudioHardware::AudioStreamInMSM72xx::read( void* buffer, ssize_t bytes)
             }
 
         }
-<<<<<<< HEAD
         else if(bytesRead == 0)
         {
          ALOGI("Bytes Read = %d ,Buffer no longer sufficient",bytesRead);
-=======
-        else if (bytesRead == 0)
-        {
-         ALOGI("Bytes Read = %ld ,Buffer no longer sufficient", bytesRead);
->>>>>>> 6221c24... Move libaudio to lge-common
          break;
         } else {
             if (errno != EAGAIN) return bytesRead;
@@ -2617,10 +2090,6 @@ ssize_t AudioHardware::AudioStreamInMSM72xx::read( void* buffer, ssize_t bytes)
 status_t AudioHardware::AudioStreamInMSM72xx::standby()
 {
     if (mState > AUDIO_INPUT_CLOSED) {
-<<<<<<< HEAD
-=======
-        msm72xx_enable_preproc(false);
->>>>>>> 6221c24... Move libaudio to lge-common
         if (mFd >= 0) {
             ::close(mFd);
             mFd = -1;
@@ -2662,13 +2131,8 @@ status_t AudioHardware::AudioStreamInMSM72xx::dump(int fd, const Vector<String16
 
 status_t AudioHardware::AudioStreamInMSM72xx::setParameters(const String8& keyValuePairs)
 {
-<<<<<<< HEAD
     android::AudioParameter param = android::AudioParameter(keyValuePairs);
     String8 key = String8(android::AudioParameter::keyRouting);
-=======
-    AudioParameter param = AudioParameter(keyValuePairs);
-    String8 key = String8(AudioParameter::keyRouting);
->>>>>>> 6221c24... Move libaudio to lge-common
     status_t status = NO_ERROR;
     int device;
     ALOGV("AudioStreamInMSM72xx::setParameters() %s", keyValuePairs.string());
@@ -2690,7 +2154,6 @@ status_t AudioHardware::AudioStreamInMSM72xx::setParameters(const String8& keyVa
     return status;
 }
 
-<<<<<<< HEAD
 #ifdef HAVE_FM_RADIO
 
 status_t AudioHardware::setFmVolume(float v)
@@ -2711,13 +2174,6 @@ String8 AudioHardware::AudioStreamInMSM72xx::getParameters(const String8& keys)
     android::AudioParameter param = android::AudioParameter(keys);
     String8 value;
     String8 key = String8(android::AudioParameter::keyRouting);
-=======
-String8 AudioHardware::AudioStreamInMSM72xx::getParameters(const String8& keys)
-{
-    AudioParameter param = AudioParameter(keys);
-    String8 value;
-    String8 key = String8(AudioParameter::keyRouting);
->>>>>>> 6221c24... Move libaudio to lge-common
 
     if (param.get(key, value) == NO_ERROR) {
         ALOGV("get routing %x", mDevices);
