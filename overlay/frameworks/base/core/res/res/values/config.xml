@@ -134,11 +134,6 @@
     <dimen name="kg_edge_swipe_region_size">32dp</dimen>
 
 
-    <!-- Values greater or equal to 0 will enable electronbeam screen-on
-         animation with the specified delay (in milliseconds), -1 will disable the animation -->
-    <integer name="config_screenOnAnimation">250</integer>
-
     <bool name="config_screenOffAnimation">true</bool>
-    <integer name="config_deviceHardwareKeys">7</integer>
 	
 </resources>	

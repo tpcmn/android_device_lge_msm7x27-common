@@ -56,10 +56,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-	audio_policy.thunderc \
-	audio.primary.thunderc
-    #audio.primary.msm7x27 \
-#    audio_policy.msm7x27 \
+    audio.primary.msm7x27 \
+    audio_policy.msm7x27
 
 # Media
 PRODUCT_PACKAGES += \
@@ -68,6 +66,7 @@ PRODUCT_PACKAGES += \
 # Misc
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
+    gps.default \
 	gps.msm7x27 \
 	libloc_api-rpc \
     lights.msm7x27 \
@@ -117,9 +116,9 @@ PRODUCT_PACKAGES += \
     hwaddrs
 
 # Offmode charging
-#PRODUCT_PACKAGES += \
-#    charger \
-#    charger_res_images
+PRODUCT_PACKAGES += \
+    charger \
+    charger_res_images
 
 # Inherit qcom/msm7x27
 $(call inherit-product, device/qcom/msm7x27/msm7x27.mk)

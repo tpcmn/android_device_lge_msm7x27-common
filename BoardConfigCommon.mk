@@ -31,25 +31,24 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_CUSTOM_GRAPHICS := ../../../device/lge/msm7x27-common/recovery/graphics.c
 
 ## Kernel
-## Kernel
-#BUILD_WITH_30X_KERNEL := true
-#ifdef BUILD_WITH_30X_KERNEL
-#TARGET_KERNEL_SOURCE := kernel/lge/msm7x27-3.0.x
+BUILD_WITH_30X_KERNEL := true
+ifdef BUILD_WITH_30X_KERNEL
+TARGET_KERNEL_SOURCE := kernel/lge/msm7x27-3.0.x
 ## *** Copy LG Kernel Headers here if necessary, DO NOT use Android auto-generated headers *** 
-#TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include3x 
-#else
-#TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
-#TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
+TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include3x 
+else
+TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 ## *** Copy LG Kernel Headers here if necessary, DO NOT use Android auto-generated headers *** 
-#TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include 
-#endif
-TARGET_PREBUILT_KERNEL := device/lge/thunderc/kernels/test21/zImage
+TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include 
+endif
+#TARGET_PREBUILT_KERNEL := device/lge/thunderc/kernels/test21/zImage
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom
 BOARD_KERNEL_BASE := 0x12200000
 BOARD_KERNEL_PAGESIZE := 2048
 
 # Copy LG Kernel Headers here if necessary, DO NOT use Android auto-generated headers
-TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include3x
+#TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include3x
 
 ## Partition Sizes: Fix this up by examining /proc/mtd on a running device
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00700000
@@ -100,11 +99,6 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE :=
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE_LEGACY := msm7x27 # temporary workaround
 BOARD_USES_QCOM_LIBRPC := true
 
-## Bluetooth
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt
-
-
 ## RIL
 BOARD_PROVIDES_LIBRIL := true
 #TARGET_PROVIDES_LIBRIL := vendor/lge/thunderc/proprietary/lib/libril.so
@@ -120,11 +114,13 @@ BOARD_CDMA_NETWORK := true
 TARGET_PROVIDES_LIBLIGHT := true
 
 ## Mass Storage 
-BOARD_USE_USB_MASS_STORAGE_SWITCH := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
-BOARD_UMS_LUNFILE := /sys/devices/platform/msm_hsusb/gadget/lun0/file
-BOARD_SDCARD_DEVICE_INTERNAL := /dev/block/vold/179:1
-BOARD_SDEXT_DEVICE := /dev/block/vold/179:2
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
+BOARD_UMS_LUNFILE := /sys/class/android_usb/android0/f_mass_storage/lun/file
+#BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+#TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
+#BOARD_UMS_LUNFILE := /sys/devices/platform/msm_hsusb/gadget/lun0/file
+#BOARD_SDCARD_DEVICE_INTERNAL := /dev/block/vold/179:1
+#BOARD_SDEXT_DEVICE := /dev/block/vold/179:2
 
 ## Touch screen compatibility 
 BOARD_USE_LEGACY_TOUCHSCREEN := true
