@@ -1,9 +1,6 @@
 /*
 ** Copyright 2008, The Android Open-Source Project
-<<<<<<< HEAD
-=======
 ** Copyright (c) 2012, Code Aurora Forum. All rights reserved.
->>>>>>> 6221c24... Move libaudio to lge-common
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -30,31 +27,23 @@
 #include <hardware_legacy/AudioHardwareBase.h>
 
 extern "C" {
-<<<<<<< HEAD
-#include "msm_audio.h"
-#include "msm_audio_voicememo.h"
-=======
 #include <linux/msm_audio.h>
 #include <linux/msm_audio_voicememo.h>
 #include <linux/msm_audio_aac.h>
 #include <linux/msm_audio_amrnb.h>
 #include <linux/msm_audio_qcp.h>
->>>>>>> 6221c24... Move libaudio to lge-common
 }
 
 using namespace android;
 
 namespace android_audio_legacy {
 
-<<<<<<< HEAD
-=======
 
 #ifdef P500_SPEAKER_IN_CALL_FIX
 #define AudioSystem_SPEAKER_IN_CALL AudioSystem::DEVICE_OUT_PROXY
 #define OutputDevices_SPEAKER_IN_CALL 0x8000
 #endif
 
->>>>>>> 6221c24... Move libaudio to lge-common
 // ----------------------------------------------------------------------------
 // Kernel driver interface
 //
@@ -72,15 +61,6 @@ namespace android_audio_legacy {
 #define EQ_MAX_BAND_NUM 12
 
 #define ADRC_ENABLE  0x0001
-<<<<<<< HEAD
-#define ADRC_DISABLE 0x0000
-#define EQ_ENABLE    0x0002
-#define EQ_DISABLE   0x0000
-#define RX_IIR_ENABLE  0x0004
-#define RX_IIR_DISABLE 0x0000
-#define MBADRC_ENABLE  0x0010
-#define MBADRC_DISABLE 0x0000
-=======
 #define ADRC_DISABLE 0xFFFE
 #define EQ_ENABLE    0x0002
 #define EQ_DISABLE   0xFFFD
@@ -88,7 +68,6 @@ namespace android_audio_legacy {
 #define RX_IIR_DISABLE 0xFFFB
 #define MBADRC_ENABLE  0x0010
 #define MBADRC_DISABLE 0xFFEF
->>>>>>> 6221c24... Move libaudio to lge-common
 
 #define AGC_ENABLE     0x0001
 #define NS_ENABLE      0x0002
@@ -185,10 +164,6 @@ enum tty_modes {
 #define AUDIO_HW_IN_FORMAT (AudioSystem::PCM_16_BIT)  // Default audio input sample format
 // ----------------------------------------------------------------------------
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6221c24... Move libaudio to lge-common
 class AudioHardware : public  AudioHardwareBase
 {
     class AudioStreamOutMSM72xx;
@@ -249,11 +224,7 @@ private:
     bool        checkOutputStandby();
     status_t    doRouting(AudioStreamInMSM72xx *input);
 #ifdef HAVE_FM_RADIO
-<<<<<<< HEAD
-    status_t    setFmOnOff(int onoff);
-=======
     status_t    setFmOnOff(bool onoff);
->>>>>>> 6221c24... Move libaudio to lge-common
 #endif
     AudioStreamInMSM72xx*   getActiveInput_l();
 
@@ -350,17 +321,6 @@ private:
             msm_snd_endpoint *mSndEndpoints;
             int mNumSndEndpoints;
             int mCurSndDevice;
-<<<<<<< HEAD
-	    int mFmRadioEnabled;
-	    int mFmPrev;
-	    int mFmVolume;
-            int m7xsnddriverfd;
-            int fmfd;
-            bool        mDualMicEnabled;
-            int         mTtyMode;
-
-            bool        mBuiltinMicSelected;
-=======
             int m7xsnddriverfd;
             bool mDualMicEnabled;
             bool mBuiltinMicSelected;
@@ -369,7 +329,6 @@ private:
             int mFmRadioEnabled;
             int mFmPrev;
 #endif
->>>>>>> 6221c24... Move libaudio to lge-common
 
      friend class AudioStreamInMSM72xx;
             android::Mutex       mLock;

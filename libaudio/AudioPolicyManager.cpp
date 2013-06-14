@@ -1,10 +1,7 @@
 /*
  * Copyright (C) 2009 The Android Open Source Project
-<<<<<<< HEAD
-=======
  * Copyright (c) 2012, Code Aurora Forum. All rights reserved.
  * Copyright (c) 2012, The CyanogenMod Project
->>>>>>> 6221c24... Move libaudio to lge-common
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,18 +22,11 @@
 #include "AudioPolicyManager.h"
 #include <media/mediarecorder.h>
 #include <fcntl.h>
-<<<<<<< HEAD
-
-namespace android_audio_legacy {
-
-
-=======
 #include <cutils/properties.h> // for property_get
 
 #include "AudioHardware.h"
 
 namespace android_audio_legacy {
->>>>>>> 6221c24... Move libaudio to lge-common
 
 // ----------------------------------------------------------------------------
 // AudioPolicyManager for msm7k platform
@@ -56,12 +46,7 @@ extern "C" void destroyAudioPolicyManager(AudioPolicyInterface *interface)
     delete interface;
 }
 
-<<<<<<< HEAD
-audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy,
-                                                             bool fromCache)
-=======
 audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, bool fromCache)
->>>>>>> 6221c24... Move libaudio to lge-common
 {
     uint32_t device = 0;
 
@@ -146,8 +131,6 @@ audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strate
                 if (device) break;
             }
 #endif
-<<<<<<< HEAD
-=======
 
 #ifdef P500_SPEAKER_IN_CALL_FIX
             if (isInCall()) {
@@ -155,7 +138,6 @@ audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strate
                 break;
             }
 #endif
->>>>>>> 6221c24... Move libaudio to lge-common
             device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER;
             if (device == 0) {
                 ALOGE("getDeviceForStrategy() speaker device not found");
@@ -169,11 +151,7 @@ audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strate
         // If incall, just select the STRATEGY_PHONE device: The rest of the behavior is handled by
         // handleIncallSonification().
         if (isInCall()) {
-<<<<<<< HEAD
-            device = getDeviceForStrategy(STRATEGY_PHONE, false /*fromCache*/);
-=======
             device = getDeviceForStrategy(STRATEGY_PHONE, false);
->>>>>>> 6221c24... Move libaudio to lge-common
             break;
         }
         // FALL THROUGH
@@ -195,9 +173,6 @@ audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strate
         // FALL THROUGH
 
     case STRATEGY_MEDIA: {
-<<<<<<< HEAD
-        uint32_t device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_AUX_DIGITAL;
-=======
 #ifdef HAVE_FM_RADIO
         uint32_t device2 = 0;
         if (mForceUse[AudioSystem::FOR_MEDIA] == AudioSystem::FORCE_SPEAKER) {
@@ -210,7 +185,6 @@ audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strate
         uint32_t device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_AUX_DIGITAL;
 #endif
 
->>>>>>> 6221c24... Move libaudio to lge-common
 #ifdef WITH_A2DP
         if (mHasA2dp && (mForceUse[AudioSystem::FOR_MEDIA] != AudioSystem::FORCE_NO_BT_A2DP) &&
                 (getA2dpOutput() != 0) && !mA2dpSuspended) {
@@ -243,15 +217,11 @@ audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strate
 
         // device is DEVICE_OUT_SPEAKER if we come from case STRATEGY_SONIFICATION or
         // STRATEGY_ENFORCED_AUDIBLE, 0 otherwise
-<<<<<<< HEAD
-        device |= device2;
-=======
         device = device ? device : device2;
         if (device == 0) {
             ALOGE("getDeviceForStrategy() speaker device not found");
         }
 
->>>>>>> 6221c24... Move libaudio to lge-common
         // Do not play media stream if in call and the requested device would change the hardware
         // output routing
         if (isInCall() &&
@@ -271,9 +241,6 @@ audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strate
     return (audio_devices_t)device;
 }
 
-<<<<<<< HEAD
-}; // namespace android_audio_legacy
-=======
 status_t AudioPolicyManager::checkAndSetVolume(int stream, int index, audio_io_handle_t output, audio_devices_t device, int delayMs, bool force)
 {
     // do not change actual stream volume if the stream is muted
@@ -565,4 +532,3 @@ bool AudioPolicyManager::isStreamActive(int stream, uint32_t inPastMs) const
 
 }; // namespace android_audio_legacy
 
->>>>>>> 6221c24... Move libaudio to lge-common
