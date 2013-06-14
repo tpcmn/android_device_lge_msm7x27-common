@@ -25,9 +25,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/nvram.txt:system/etc/wl/nvram.txt \
     $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab \
-	$(LOCAL_PATH)/prebuilt/etc/gps.conf:system/etc/gps.conf \
+	$(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf \
     $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
-# 	$(LOCAL_PATH)/configs/hostapd.conf:system/etc/wifi/hostapd.conf \
+
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
@@ -35,7 +35,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
 	frameworks/native/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.camera=msm7x27 \
@@ -49,7 +49,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hdmi_out=false \
     debug.sf.hw=1 \
-    debug.composition.type=gpu \
+    debug.composition.type=mdp \
     debug.gr.numframebuffers=3 \
 	persist.sys.purgeable_assets=1 \
     persist.service.adb.enable=1
@@ -80,7 +80,7 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm7x27 \
-	libcamera
+#	libcamera
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
