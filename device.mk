@@ -49,7 +49,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hdmi_out=false \
     debug.sf.hw=1 \
     debug.composition.type=gpu \
-    debug.gr.numframebuffers=2 \
+    debug.gr.numframebuffers=3 \
 	persist.sys.purgeable_assets=1 \
     persist.service.adb.enable=1
 
@@ -70,10 +70,9 @@ PRODUCT_PACKAGES += \
 	gps.msm7x27 \
 	libloc_api-rpc \
     lights.msm7x27 \
-	hwcomposer.msm7x27 \
     lgapversion \
 	librpc
-    
+#	hwcomposer.msm7x27 \    
 # Build sim toolkit
 #PRODUCT_PACKAGES += \
 #    Stk
