@@ -38,6 +38,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
+      wifi.ap.interface=wl0.1 
+	
+	
+PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.camera=msm7x27 \
     ro.com.google.locationfeatures=1 \
     ro.com.google.networklocation=1 \
