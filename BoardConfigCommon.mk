@@ -14,14 +14,19 @@
 # limitations under the License.
 #
 
-## Define BOARD_HAVE_BLUETOOTH_BLUEZ before device/qcom/msm7x27/BoardConfigCommon.mk
-## Bluetooth
-BOARD_HAVE_BLUETOOTH_BLUEZ := true
-BOARD_HAVE_BLUETOOTH_BCM := true
-#BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt
 
-# Use the Qualcomm common folder
-include device/qcom/msm7x27/BoardConfigCommon.mk
+# Use the Qualcomm common folder 
+include device/qcom/msm7x27/BoardConfigCommon.mk 
+
+## Bluetooth
+BOARD_HAVE_BLUETOOTH_BCM := true
+
+# Note: BOARD_HAVE_BLUETOOTH_BLUEZ is defined in 
+# device/lge/msm7x27-common/device.mk due to inheritance issues. 
+ifndef BOARD_HAVE_BLUETOOTH_BLUEZ 
+  BOARD_HAVE_BLUETOOTH := true 
+  BOARD_BLUEDROID_VENDOR_CONF := device/lge/msm7x27-common/bluetooth/libbt_lge.txt 
+endif 
 
 ## Boot loader & recovery
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -29,8 +34,6 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_CUSTOM_GRAPHICS := ../../../device/lge/msm7x27-common/recovery/graphics.c
-TARGET_RECOVERY_FSTAB := device/lge/msm7x27-common/rootdir/etc/fstab.qcom 
-RECOVERY_FSTAB_VERSION := 2 
 
 ## Kernel
 #BUILD_WITH_30X_KERNEL := true
