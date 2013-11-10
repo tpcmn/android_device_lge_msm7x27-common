@@ -29,6 +29,8 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_CUSTOM_GRAPHICS := ../../../device/lge/msm7x27-common/recovery/graphics.c
+TARGET_RECOVERY_FSTAB := device/lge/msm7x27-common/rootdir/etc/fstab.qcom 
+RECOVERY_FSTAB_VERSION := 2 
 
 ## Kernel
 #BUILD_WITH_30X_KERNEL := true
