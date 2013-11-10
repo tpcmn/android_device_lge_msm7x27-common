@@ -31,17 +31,17 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_CUSTOM_GRAPHICS := ../../../device/lge/msm7x27-common/recovery/graphics.c
 
 ## Kernel
-BUILD_WITH_30X_KERNEL := true
-ifdef BUILD_WITH_30X_KERNEL
+#BUILD_WITH_30X_KERNEL := true
+#ifdef BUILD_WITH_30X_KERNEL
 TARGET_KERNEL_SOURCE := kernel/lge/msm7x27-3.0.x
 ## *** Copy LG Kernel Headers here if necessary, DO NOT use Android auto-generated headers *** 
 TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include3x 
-else
-TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
+#else
+#TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
+#TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 ## *** Copy LG Kernel Headers here if necessary, DO NOT use Android auto-generated headers *** 
-TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include 
-endif
+#TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27-common/include 
+#endif
 #TARGET_PREBUILT_KERNEL := device/lge/thunderc/kernels/test21/zImage
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom
 BOARD_KERNEL_BASE := 0x12200000
