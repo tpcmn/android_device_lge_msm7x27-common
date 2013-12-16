@@ -43,11 +43,11 @@
 #if HAVE_ANDROID_OS
 #include <linux/android_pmem.h>
 #endif
-#include <linux/ioctl.h>
+#include <ioctl.h>
 #include <camera/CameraParameters.h>
 
-#include "linux/msm_mdp.h"
-#include <linux/fb.h>
+#include <msm_mdp.h>
+#include <fb.h>
 
 #define LIKELY(exp)   __builtin_expect(!!(exp), 1)
 #define UNLIKELY(exp) __builtin_expect(!!(exp), 0)
