@@ -20,6 +20,7 @@
 
 #include <binder/IMemory.h>
 #include <utils/RefBase.h>
+#include <gui/ISurface.h>
 #include <camera/Camera.h>
 #include <camera/CameraParameters.h>
 
@@ -239,3 +240,4 @@ extern "C" sp<CameraHardwareInterface> HAL_openCameraHardware(int cameraId);
 };  // namespace android
 
 #endif
+
